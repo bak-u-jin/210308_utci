@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import Axios from 'axios';
 
 function App() {
+  const [utciArea,setUtciArea] = useState({
+    id: 'a',
+    password: '123'
+  });
+
+  const submitReview = () => {
+    // Axios.post('http://localhost:3002/signin',{
+    //   id:utciArea.id,
+    //   password:utciArea.password
+    // }).then(()=>{
+    //   alert('yeah');
+    // })
+    Axios.get('http://localhost:3002/get',{
+    }).then((response)=>{
+      console.log(response.data);
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <button onClick={submitReview}>Yeah</button>
     </div>
   );
 }

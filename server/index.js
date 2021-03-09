@@ -1,8 +1,16 @@
-var express = require('express');
-var bodyParser = require('body-parser');
-var mongoose = require('mongoose');
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const cors = require('cors');
+var request = require('request');
 
 var app = express();
+
+const $url = 'http://apis.data.go.kr/1360000/AsosHourlyInfoService/getWthrDataList';
+const $KEY = 'xE5NkSveAiECAqJi4BHY11i4OoOfa%2BeT6NzDVUkoYTNzFyIqbOPBU6UbefrbkwGEc3Dd5DvJvB4jHIyE3J5bvg%3D%3D';
+const $item = '&dataType=JSON&dataCd=ASOS&dateCd=HR&stnIds=108&endDt=20200310&endHh=01&startHh=01&startDt=20200310';
+
+const $api_url = $url + '?serviceKey=' + $KEY + $item;
 
 const uri = 'mongodb://127.0.0.1:27017/utci_db';
 var db = mongoose.connect(uri, (err) => {
@@ -21,8 +29,18 @@ var UserSchema = new mongoose.Schema({
 
 var Users = mongoose.model('users', UserSchema);
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ limit: '1gb', extended: false }));
+
+app.get('/', function (req, res) {
+	request($api_url, function (error, response, body) {
+			// parse JSON so we have an object to work with
+			var weather = JSON.parse(body) ;
+			// send data to browser
+			res.send(weather);
+	});
+});
 
 app.post('/signup', (req, res) => {
 	var new_user = new Users(req.body);
@@ -39,6 +57,7 @@ app.post('/signin', (req, res) => {
 		else if (user) return res.status(200).json({ message: '유저 찾음!', data: user });
 		else return res.status(404).json({ message: '유저 없음!' });
 	});
+	console.log("ccc");
 });
 
 app.get('/get', (req,res) =>{
@@ -46,4 +65,4 @@ app.get('/get', (req,res) =>{
   res.send("bbb");
 })
 
-app.listen(4000, () => console.log('Server On 4000'));
+app.listen(3002, () => console.log('Server On 3002'));
