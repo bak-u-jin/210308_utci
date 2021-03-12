@@ -20,7 +20,7 @@ function App() {
 
   const submitReview = () => {
     Axios.post('http://localhost:3002/settime',{
-      Day: yesterday.realDay,
+      day: yesterday.realDay,
       time: yesterday.realTime
     }).then(()=>{
       alert('post');
@@ -37,9 +37,10 @@ function App() {
     // //   setContent(response.data);
     // //   console.log(response.data);
     // // })
-    Axios.get('http://localhost:3002/get').then((response)=>{
-      setContent(response);
-      console.log(response);
+    Axios.get('http://localhost:3002/get').then(({data})=>{
+      setContent(data);
+      console.log(data.tm);
+      console.log(typeof(data.tm));
     })
   }
 
@@ -49,7 +50,12 @@ function App() {
 
   return (
     <div className="App">
-      <h1>{content}</h1>
+      <h1>시간: {content.tm}</h1>
+      <h1>장소: {content.stnNm}</h1>
+      <h1>기온: {content.ta}</h1>
+      <h1>복사온도: {content.ts}</h1>
+      <h1>풍속: {content.ws}</h1>
+      <h1>습도: {content.hm}</h1>
       <button onClick={submitReview}>Yeah</button>
     </div>
   );
