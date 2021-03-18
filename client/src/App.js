@@ -8,10 +8,11 @@ import Map from './Map'
 function App() {
   
   let yesterday = getDay();
-  let location=108;
+  let location;
 
   const [content,setContent] = useState(0);
   const [utci,setUTCI] = useState(0);
+  const [state,setState] = useState("지역을 선택하세요");
 
   const submitReview = () => {
     Axios.post('http://localhost:3002/settime',{
@@ -20,15 +21,21 @@ function App() {
       time: yesterday.realTime
     }).then(()=>{
       alert('post');
-    })
+    });
     console.log("aa",location);
+    console.log(setContent.tm);
     
     Axios.get('http://localhost:3002/get').then(({data})=>{
       setContent(data);
       console.log(data.tm);
       console.log(typeof(data.tm));
       console.log(location);
-    })
+    }).catch(function (error) {
+      console.log("location",location);
+      console.log(error);
+      console.log("eeeeeeeeeeeeeeeee");
+      setUTCI("error");
+    });
   }
 
   const HandleHover = (porpLocation) =>{
@@ -44,14 +51,13 @@ function App() {
     <D_App className="App">
       <Map HandleHover={HandleHover}/>
       <D_data>
-        <h1>시간: {content.tm}</h1>
-        <h1>장소: {content.stnNm}</h1>
-        <h1>기온: {content.ta}</h1>
-        <h1>복사온도: {content.ts}</h1>
-        <h1>풍속: {content.ws}</h1>
-        <h1>습도: {content.hm}</h1>
-        <h1>UTCI: {utci}</h1>
-        <button onClick={submitReview}>Yeah</button>
+          <h1>시간: {content.tm}</h1>
+          <h1>장소: {content.stnNm}</h1>
+          <h1>기온: {content.ta}</h1>
+          <h1>복사온도: {content.ts}</h1>
+          <h1>풍속: {content.ws}</h1>
+          <h1>습도: {content.hm}</h1>
+          <h1>UTCI: {utci}</h1>
       </D_data>
     </D_App>
   );
@@ -106,3 +112,21 @@ export default App;
     // //   setContent(response.data);
     // //   console.log(response.data);
     // // })
+
+    // {
+    //   // location == undefined ? (
+    //   //   console.log("bbb",location),
+    //   //   <h1>장소를 선택해주세요</h1>
+    //   //   ) : (
+    //       // content.tm == null ? (<h1>Loading...</h1>) : (
+    //       <h1>시간: {content.tm}</h1>,
+    //       <h1>장소: {content.stnNm}</h1>,
+    //       <h1>기온: {content.ta}</h1>,
+    //       <h1>복사온도: {content.ts}</h1>,
+    //       <h1>풍속: {content.ws}</h1>,
+    //       <h1>습도: {content.hm}</h1>,
+    //       <h1>UTCI: {utci}</h1>
+    //       // <button onClick={submitReview}>Yeah</button>,
+    //       // )
+    //   // )
+    // }

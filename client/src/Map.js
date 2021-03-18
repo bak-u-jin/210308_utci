@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import pathMap from './PathMap';
 
 function Map({HandleHover}){
+	let timer;
 	useEffect(()=>{
 	},[]);
 
@@ -12,12 +13,18 @@ function Map({HandleHover}){
 				"path",{
 					className: pathNum.id,
 					d: pathNum.path,
-					onMouseOver: (() => HandleHover(pathNum.key))
+					onMouseEnter: (() =>{
+						timer = setTimeout(()=>HandleHover(pathNum.key) , 1000)
+					}),
+					onMouseLeave: (() =>{
+						clearTimeout(timer)
+					})
 				}
 			))}
 		</ASVG>
 	)
 }
+
 const ASVG = styled.svg`
 	path{
 		fill: #CCCCCC;

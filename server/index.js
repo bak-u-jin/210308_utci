@@ -59,7 +59,8 @@ app.post('/settime', (req, res) => {
 										+ O_apiUrl.location
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
-});
+									});
+
 
 app.post('/signup', (req, res) => {
 	var new_user = new Users(req.body);
