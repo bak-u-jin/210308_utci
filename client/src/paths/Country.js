@@ -1,4 +1,4 @@
-const PathMap = [
+const Country = [
   {
     num: 0,
     id: "Seoul",
@@ -119,4 +119,4 @@ const PathMap = [
   },
 ]
 
-export default PathMap;
+export default Country;

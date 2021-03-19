@@ -5,15 +5,35 @@ import getDay from './getDay';
 import Cal_UTCI from './Cal_UTCI';
 import Map from './Map'
 
+const Foo = () => {
+  return <button>FOO</button>;
+};
+
+const Bar = () => {
+  return <button>BAR</button>;
+};
+
+const Default = () => {
+  return <button>DEFAULT</button>;
+};
+
+const ENUM_STATES = {
+  1: <Foo />,
+  2: <Bar />,
+  3: <Default />
+};
+
 function App() {
-  
+
   let yesterday = getDay();
   let location;
 
   const [content,setContent] = useState(0);
   const [utci,setUTCI] = useState(0);
   const [state,setState] = useState("지역을 선택하세요");
+  const [changeMap,setChangeMap] = useState(1);
 
+  console.log("aaa", typeof(ENUM_STATES));
   const submitReview = () => {
     Axios.post('http://localhost:3002/settime',{
       location,
@@ -22,7 +42,6 @@ function App() {
     }).then(()=>{
       alert('post');
     });
-    console.log("aa",location);
     console.log(setContent.tm);
     
     Axios.get('http://localhost:3002/get').then(({data})=>{
@@ -39,18 +58,29 @@ function App() {
   }
 
   const HandleHover = (porpLocation) =>{
+    console.log("num ",porpLocation);
     location = porpLocation;
     submitReview();
+  }
+
+  const HandleClick = (key) =>{
+    console.log(key);
+    if(key == 8)
+      setChangeMap(2);
   }
 
   useEffect(()=>{
     setUTCI(Cal_UTCI(content));
   },[content])
 
+  useEffect(() =>{
+    console.log("cc",changeMap);
+  },[changeMap])
+
   return (
     <D_App className="App">
-      <Map HandleHover={HandleHover}/>
-      <D_data>
+      <Map HandleHover={HandleHover} HandleClick={HandleClick}/>
+      {/* <D_data>
           <h1>시간: {content.tm}</h1>
           <h1>장소: {content.stnNm}</h1>
           <h1>기온: {content.ta}</h1>
@@ -58,12 +88,14 @@ function App() {
           <h1>풍속: {content.ws}</h1>
           <h1>습도: {content.hm}</h1>
           <h1>UTCI: {utci}</h1>
-      </D_data>
+      </D_data> */}
+      <p>ppp</p>
+      <div>
+        {ENUM_STATES[changeMap]}
+      </div>
     </D_App>
   );
 }
-
-
 
 const GlobalStyle = createGlobalStyle`
   body{

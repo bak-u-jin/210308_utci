@@ -1,23 +1,26 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import pathMap from './PathMap';
+import Country from './paths/Country';
+import Geyoungi from './paths/Geyonggi';
 
-function Map({HandleHover}){
+function Map({HandleHover, HandleClick}){
 	let timer;
-	useEffect(()=>{
-	},[]);
+	const locationCity = [Country, Geyoungi]
 
 	return(
-		<ASVG id="svgMap" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox="0 100 550 700">
-			{pathMap.map(pathNum => React.createElement(
+		<ASVG id="svgMap" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox="0 50 700 800">
+			{locationCity[1].map(pathNum => React.createElement(
 				"path",{
 					className: pathNum.id,
 					d: pathNum.path,
 					onMouseEnter: (() =>{
-						timer = setTimeout(()=>HandleHover(pathNum.key) , 1000)
+						timer = setTimeout(()=>HandleHover(pathNum.key) , 1000);
 					}),
 					onMouseLeave: (() =>{
-						clearTimeout(timer)
+						clearTimeout(timer);
+					}),
+					onClick: (() =>{
+						HandleClick(pathNum.num);
 					})
 				}
 			))}
