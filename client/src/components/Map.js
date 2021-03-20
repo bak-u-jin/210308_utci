@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Country from './paths/Country';
-import Geyoungi from './paths/Geyonggi';
+import Country from '../paths/Country';
+import Geyoungi from '../paths/Geyonggi';
 
 function Map({HandleHover, HandleClick}){
 	let timer;
@@ -9,12 +9,12 @@ function Map({HandleHover, HandleClick}){
 
 	return(
 		<ASVG id="svgMap" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox="0 50 700 800">
-			{locationCity[1].map(pathNum => React.createElement(
+			{locationCity[0].map(pathNum => React.createElement(
 				"path",{
 					className: pathNum.id,
 					d: pathNum.path,
 					onMouseEnter: (() =>{
-						timer = setTimeout(()=>HandleHover(pathNum.key) , 1000);
+						timer = setTimeout(()=>HandleHover(pathNum.num) , 1000);
 					}),
 					onMouseLeave: (() =>{
 						clearTimeout(timer);
