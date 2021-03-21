@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useHistory } from "react-router-dom";
 import {useLocation} from "react-router";
 import Axios from 'axios';
 
@@ -7,16 +6,10 @@ import getDay from '../components/getDay';
 
 function Result(){
   
-  const history = useHistory();
-
   if(useLocation().state === undefined)
-    history.push("/");
-  else
-    console.log("Aaa");  
-
-  let aa = useLocation();
+    window.location.replace("/");
     
-  const location = aa.state.pathKey;
+  const location = useLocation().state.pathKey;
 
   const [content,setContent] = useState(0);
   const [utci,setUTCI] = useState(0);
@@ -24,36 +17,25 @@ function Result(){
 
   let yesterday = getDay();
 
-  useEffect(() =>{
+  useEffect(()=>{
     submitReview();
-  })
+  }, []);
 
   async function submitReview (){
+
     Axios.post('http://localhost:3002/settime',{
       location,
       day: yesterday.realDay,
       time: yesterday.realTime
-    }).then(()=>{
-      alert('post');
-    });
-    console.log(setContent.tm);
-    
-    await Axios.get('http://localhost:3002/get').then(({data})=>{
+    }).then(({data})=>{
       setContent(data);
-      console.log(data.tm);
-      console.log(typeof(data.tm));
-      console.log(location);
     }).catch(function (error) {
-      console.log("location",location);
       console.log(error);
-      console.log("eeeeeeeeeeeeeeeee");
-      setUTCI("error");
     });
 
     setIsLoading(false);
   }
 
-  console.log(content);
   return(
     <div>
       {

@@ -34,30 +34,27 @@ function Home() {
   const [content,setContent] = useState(0);
   const [utci,setUTCI] = useState(0);
   const [state,setState] = useState("지역을 선택하세요");
-  const [changeMap,setChangeMap] = useState(1);
+  // const [changeMap,setChangeMap] = useState(1);
 
-  const submitReview = () => {
+  // Axios.get('http://localhost:3002/').then(() =>{
+  //   console.log("get");
+  // });
+
+  async function submitReview (){
+
     Axios.post('http://localhost:3002/settime',{
       location,
       day: yesterday.realDay,
       time: yesterday.realTime
-    }).then(()=>{
-      alert('post');
-    });
-    console.log(setContent.tm);
-    
-    Axios.get('http://localhost:3002/get').then(({data})=>{
+    }).then(({data})=>{
       setContent(data);
-      console.log(data.tm);
-      console.log(typeof(data.tm));
-      console.log(location);
     }).catch(function (error) {
-      console.log("location",location);
       console.log(error);
-      console.log("eeeeeeeeeeeeeeeee");
-      setUTCI("error");
     });
+
+    // setIsLoading(false);
   }
+
 
   const HandleHover = (porpLocation) =>{
     console.log("num ",porpLocation);
@@ -67,8 +64,8 @@ function Home() {
   
   const HandleClick = (key) =>{
     console.log(key);
-    if(key == 8)
-      setChangeMap(2);
+    // if(key == 8)
+      // setChangeMap(2);
 
     history.push({
       pathname: "/result",
@@ -82,9 +79,9 @@ function Home() {
     setUTCI(Cal_UTCI(content));
   },[content])
 
-  useEffect(() =>{
-    console.log("cc",changeMap);
-  },[changeMap])
+  // useEffect(() =>{
+  //   console.log("cc",changeMap);
+  // },[changeMap])
 
   return (
     <D_App className="App">
