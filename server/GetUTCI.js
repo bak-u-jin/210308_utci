@@ -1,12 +1,10 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
+// const mongoose = require('mongoose');
 const cors = require('cors');
 var request = require('request');
 
 var app = express();
-
-let count = 0;
 
 let O_apiUrl = new Object();
 
@@ -24,26 +22,22 @@ O_apiUrl.totalUrl = O_apiUrl.url + '?serviceKey=' + O_apiUrl.key + O_apiUrl.item
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 
-const uri = 'mongodb://127.0.0.1:27017/utci_db';
-var db = mongoose.connect(uri, (err) => {
-	if (err) {
-		console.log(err.message);
-	} else {
-    console.log('Succesfully Connected!');
-	}
-});
+// const uri = 'mongodb://127.0.0.1:27017/utci_db';
+// var db = mongoose.connect(uri, (err) => {
+// 	if (err) {
+// 		console.log(err.message);
+// 	} else {
+//     console.log('Succesfully Connected!');
+// 	}
+// });
 
-var UserSchema = new mongoose.Schema({
-	password: {type: 'Number', required: true}, // 비밀번호
-	name: String, // 이름
-	id: String, // 아이디
-});
+// var UserSchema = new mongoose.Schema({
+// 	password: {type: 'Number', required: true}, // 비밀번호
+// 	name: String, // 이름
+// 	id: String, // 아이디
+// });
 
-var Users = mongoose.model('users', UserSchema);
-
-app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: false }));
+// var Users = mongoose.model('users', UserSchema);
 
 // app.get('/', (req, res) => {
 // 	console.log("UserIn");
