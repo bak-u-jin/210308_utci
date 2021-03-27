@@ -5,6 +5,7 @@ import Axios from 'axios';
 
 import GlobalStyle from '../GlobalStyle';
 
+import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
 
 function Result(){
@@ -17,6 +18,7 @@ function Result(){
   const [content,setContent] = useState(0);
   const [utci,setUTCI] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
+  const [shopItems, setShopItems] = useState(0);
 
   let yesterday = getDay();
 
@@ -25,7 +27,7 @@ function Result(){
   }, []);
 
   async function submitReview (){
-    Axios.post('http://localhost:3002/settime',{
+    Axios.post('http://localhost:3002/setTime',{
       location,
       day: yesterday.realDay,
       time: yesterday.realTime
@@ -35,8 +37,20 @@ function Result(){
       console.log(error);
     });
 
+    await Axios.get('http://localhost:3002/shopping').then(
+      ({data}) =>{
+        console.log(data.items);
+        setShopItems(data.items);
+    }).catch(function (error){
+      console.log("eee",error);
+    })
+
     setIsLoading(false);
   }
+
+  useEffect(()=>{
+    setUTCI(Cal_UTCI(content));
+  },[content])
 
   return(
     <D_App>
@@ -45,16 +59,31 @@ function Result(){
         isLoading ? (
           <h4>Loading...</h4>
         ) : (
-          
-          <D_data>
-            <p>시간: {content.tm}</p>
-            <p>장소: {content.stnNm}</p>
-            <p>기온: {content.ta}</p>
-            <p>복사온도: {content.ts}</p>
-            <p>풍속: {content.ws}</p>
-            <p>습도: {content.hm}</p>
-            <p>UTCI: {utci}</p>
-          </D_data>
+          <>
+            <D_data>
+              <p>시간: {content.tm}</p>
+              <p>장소: {content.stnNm}</p>
+              <p>기온: {content.ta}</p>
+              <p>복사온도: {content.ts}</p>
+              <p>풍속: {content.ws}</p>
+              <p>습도: {content.hm}</p>
+              <p>UTCI: {utci}</p>
+            </D_data>
+
+            <D_shop>
+              {/* <p>{shopItems[0].title}</p> */}
+              {
+                shopItems.map((itemNum) => 
+                // console.log(itemNum.title)
+                React.createElement(
+                  "img",{
+                    src: itemNum.image,
+                    width: "20%"
+                  }
+                )
+                )}
+            </D_shop>
+          </>
         )
       }
     </D_App>
@@ -63,13 +92,11 @@ function Result(){
 
 const D_App = styled.div`
   max-width: 1280px;
-  display: flex;
   align-items: center;
   margin: 5%;
   `;
   
   const D_data = styled.div`
-  display: inline-block;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
@@ -86,6 +113,11 @@ const D_App = styled.div`
     width: 240px;
     height: 340px;
   }
+`;
+
+const D_shop = styled.div`
+  background: #defcf9;
+  display: block;
 `;
 
 export default Result;

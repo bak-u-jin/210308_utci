@@ -32,7 +32,7 @@ function Home() {
 
   async function submitReview (){
 
-    Axios.post('http://localhost:3002/settime',{
+    Axios.post('http://localhost:3002/setTime',{
       location,
       day: yesterday.realDay,
       time: yesterday.realTime

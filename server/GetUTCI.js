@@ -1,10 +1,4 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-// const mongoose = require('mongoose');
-const cors = require('cors');
 var request = require('request');
-
-var app = express();
 
 let O_apiUrl = new Object();
 
@@ -22,28 +16,7 @@ O_apiUrl.totalUrl = O_apiUrl.url + '?serviceKey=' + O_apiUrl.key + O_apiUrl.item
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 
-// const uri = 'mongodb://127.0.0.1:27017/utci_db';
-// var db = mongoose.connect(uri, (err) => {
-// 	if (err) {
-// 		console.log(err.message);
-// 	} else {
-//     console.log('Succesfully Connected!');
-// 	}
-// });
-
-// var UserSchema = new mongoose.Schema({
-// 	password: {type: 'Number', required: true}, // 비밀번호
-// 	name: String, // 이름
-// 	id: String, // 아이디
-// });
-
-// var Users = mongoose.model('users', UserSchema);
-
-// app.get('/', (req, res) => {
-// 	console.log("UserIn");
-// });
-
-app.post('/settime', (req, res) => {
+exports.postUTCI = function(req, res) {
 	O_apiUrl.location = `&stnIds=${req.body.location}`;
 	O_apiUrl.startDate = `&startDt=${req.body.day}`;
 	O_apiUrl.endDate = `&endDt=${req.body.day}`;
@@ -63,11 +36,10 @@ app.post('/settime', (req, res) => {
 		console.log(data.response.body.items.item[0]);
 		res.send(stringfyData);
 	})
-});
+};
 
-// app.listen(3002, () => console.log('Server On 3002'));
-
-
+// const bodyParser = require('body-parser');
+// const mongoose = require('mongoose');
 
 // app.post('/signup', (req, res) => {
 // 	var new_user = new Users(req.body);
@@ -90,4 +62,26 @@ app.post('/settime', (req, res) => {
 // 			return res.status(404).json({ message: '유저 없음!' });
 // 		}
 // 	});
+// });
+
+
+// const uri = 'mongodb://127.0.0.1:27017/utci_db';
+// var db = mongoose.connect(uri, (err) => {
+// 	if (err) {
+// 		console.log(err.message);
+// 	} else {
+//     console.log('Succesfully Connected!');
+// 	}
+// });
+
+// var UserSchema = new mongoose.Schema({
+// 	password: {type: 'Number', required: true}, // 비밀번호
+// 	name: String, // 이름
+// 	id: String, // 아이디
+// });
+
+// var Users = mongoose.model('users', UserSchema);
+
+// app.get('/', (req, res) => {
+// 	console.log("UserIn");
 // });
