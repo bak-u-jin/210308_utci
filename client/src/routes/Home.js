@@ -85,7 +85,6 @@ function Home() {
       <GlobalStyle/>
       <Map handleMap={handleMap} boxSize={boxSize} HandleHover={HandleHover} HandleClick={HandleClick}/>
       <D_data>
-          <p>UTCI: {utci}</p>
           <Emoticon_UTCI utci={utci}/>
       </D_data>
       

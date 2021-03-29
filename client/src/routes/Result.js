@@ -7,6 +7,7 @@ import GlobalStyle from '../GlobalStyle';
 
 import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
+import Emoticon_UTCI from '../components/Emoticon_UTCI';
 
 function Result(){
   
@@ -22,11 +23,7 @@ function Result(){
 
   let yesterday = getDay();
 
-  useEffect(()=>{
-    submitReview();
-  }, []);
-
-  async function submitReview (){
+  function getContent (){
     Axios.post('http://localhost:3002/setTime',{
       location,
       day: yesterday.realDay,
@@ -36,21 +33,32 @@ function Result(){
     }).catch(function (error) {
       console.log(error);
     });
+  }
 
-    await Axios.get('http://localhost:3002/shopping').then(
+  async function getShop(utci){
+    await Axios.post('http://localhost:3002/shopping',{
+      utci
+    }).then(
       ({data}) =>{
-        console.log(data.items);
         setShopItems(data.items);
     }).catch(function (error){
-      console.log("eee",error);
+      console.log(error);
     })
 
     setIsLoading(false);
   }
 
   useEffect(()=>{
+    getContent();
+  }, []);
+
+  useEffect(()=>{
     setUTCI(Cal_UTCI(content));
-  },[content])
+  },[content]);
+  
+  useEffect(()=>{
+    getShop(utci);
+  },[utci]);
 
   return(
     <D_App>
@@ -60,28 +68,47 @@ function Result(){
           <h4>Loading...</h4>
         ) : (
           <>
-            <D_data>
-              <p>시간: {content.tm}</p>
-              <p>장소: {content.stnNm}</p>
-              <p>기온: {content.ta}</p>
-              <p>복사온도: {content.ts}</p>
-              <p>풍속: {content.ws}</p>
-              <p>습도: {content.hm}</p>
-              <p>UTCI: {utci}</p>
-            </D_data>
+              <D_data>
+                <p>
+                  시간: {content.tm}
+                </p>
+                <p>
+                  장소: {content.stnNm}
+                </p>
+                <p>
+                  기온: {content.ta}
+                </p>
+                <p>
+                  복사온도: {content.ts}
+                </p>
+                <p>
+                  풍속: {content.ws}
+                </p>
+                <p>
+                  습도: {content.hm}
+                </p>
+                <p>
+                  UTCI: {utci}
+                </p>
+              </D_data>
+            <D_result>
+              <Emoticon_UTCI utci={utci}/>
+            </D_result>
 
             <D_shop>
-              {/* <p>{shopItems[0].title}</p> */}
               {
                 shopItems.map((itemNum) => 
-                // console.log(itemNum.title)
                 React.createElement(
                   "img",{
                     src: itemNum.image,
-                    width: "20%"
+                    height: "140px",
+                    style: {
+                      display: "flex",
+                      alignItems: "center"
+                    }
                   }
-                )
-                )}
+                ))
+              }
             </D_shop>
           </>
         )
@@ -97,27 +124,43 @@ const D_App = styled.div`
   `;
   
   const D_data = styled.div`
+  position: absolute;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
   
   @media only screen and (min-width:720px){
-    width: 340px;
-    height: 480px;
+    width: 210px;
+    height: 200px;
   }
 
   @media only screen and (max-width:720px){
     width: 240px;
     height: 340px;
   }
+
+  p{
+    margin:2px 0;
+  }
+`;
+
+const D_result = styled.div`
+  height:700px;
 `;
 
 const D_shop = styled.div`
-  background: #defcf9;
-  display: block;
+  display: flex;
+  justify-content: space-between;
+
+  *{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    
+  }
 `;
 
 export default Result;

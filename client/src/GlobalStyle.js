@@ -19,11 +19,11 @@ const GlobalStyle = createGlobalStyle`
     margin: 10px auto;
     
     @media only screen and (min-width:720px){
-      font-size: 1.8em;
+      font-size: 1em;
     }
   
     @media only screen and (max-width:720px){
-      font-size: 1.2em;
+      font-size: 0.8em;
     }
   }
 `;

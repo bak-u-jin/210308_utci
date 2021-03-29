@@ -1,10 +1,16 @@
 var request = require('request');
+const Get_UTCI = require('./GetUTCI');
+const GetUriByUTCI = require('./GetUriByUTCI');
 
 var client_id = '6HmeeyGn9wj6jkb1N9uV';
 var client_secret = 'Nez5KbWj7L';
 
 exports.getShop = function (req, res) {
-  var api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI("바지") + '&display=5';
+  utci = req.body.utci;
+
+  shopUri = GetUriByUTCI.GetUriByUTCI(utci);
+
+  var api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI(shopUri) + '&display=5';
   var options = {
       url: api_url,
       headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}

@@ -27,9 +27,8 @@ exports.postUTCI = function(req, res) {
 										+ O_apiUrl.location
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
-
+										
 	request({url: O_apiUrl.totalUrl}, (error, result) =>{
-		console.log("location is ", O_apiUrl.location);
 		const data = JSON.parse(result.body);
 		
 		const stringfyData = JSON.stringify(data.response.body.items.item[0]);
