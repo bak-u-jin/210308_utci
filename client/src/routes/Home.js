@@ -3,6 +3,8 @@ import Axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 
+import logo from '../img/logo.svg'
+
 import GlobalStyle from '../GlobalStyle';
 
 import getDay from '../components/getDay';
@@ -83,6 +85,7 @@ function Home() {
   return (
     <D_App className="App">
       <GlobalStyle/>
+      <img src={logo} alt="logo" height="30px" />
       <Map handleMap={handleMap} boxSize={boxSize} HandleHover={HandleHover} HandleClick={HandleClick}/>
       <D_data>
           <Emoticon_UTCI utci={utci}/>
