@@ -8,6 +8,7 @@ import GlobalStyle from '../GlobalStyle';
 import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
+import MoreShop from '../components/MoreShop';
 
 function Result(){
   
@@ -110,6 +111,8 @@ function Result(){
                 ))
               }
             </D_shop>
+
+            <MoreShop/>
           </>
         )
       }
@@ -118,13 +121,18 @@ function Result(){
 }
 
 const D_App = styled.div`
-  max-width: 1280px;
+  max-width: 1024px;
+  display: flex;
+  flex-direction : column;
+  justify-content: center;
   align-items: center;
-  margin: 5%;
+  margin: 0 auto;
   `;
   
   const D_data = styled.div`
   position: absolute;
+  top: 60px;
+  left: 60px;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
@@ -154,12 +162,12 @@ const D_result = styled.div`
 
 const D_shop = styled.div`
   display: flex;
-  justify-content: space-between;
+  width: 100%;
+  justify-content: space-around;
 
   *{
     border-radius: 10px;
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    
   }
 `;
 

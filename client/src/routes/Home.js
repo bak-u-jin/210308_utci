@@ -3,14 +3,13 @@ import Axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 
-import logo from '../img/logo.svg'
-
 import GlobalStyle from '../GlobalStyle';
 
 import getDay from '../components/getDay';
 import Cal_UTCI from '../components/Cal_UTCI';
 import Map from '../components/Map';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
+
 
 
 
@@ -85,22 +84,28 @@ function Home() {
   return (
     <D_App className="App">
       <GlobalStyle/>
-      <img src={logo} alt="logo" height="30px" />
-      <Map handleMap={handleMap} boxSize={boxSize} HandleHover={HandleHover} HandleClick={HandleClick}/>
-      <D_data>
-          <Emoticon_UTCI utci={utci}/>
-      </D_data>
+      
+      <M_main>
+        <Map handleMap={handleMap} boxSize={boxSize} HandleHover={HandleHover} HandleClick={HandleClick}/>
+        <D_data>
+            <Emoticon_UTCI utci={utci}/>
+        </D_data>
+      </M_main>
       
     </D_App>
   );
 }
 
 const D_App = styled.div`
-  max-width: 1280px;
+  max-width: 1024px;
+  margin: 5% auto;
+`;
+
+const M_main = styled.div`
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 5% auto;
 `;
 
 const D_data = styled.div`
