@@ -1,5 +1,6 @@
 exports.GetUriByUTCI = function(utci, category) {
   let uriByUtci;
+  console.log("category",category);
 
   if(utci > 46)
     uriByUtci = "셔츠";
@@ -10,7 +11,7 @@ exports.GetUriByUTCI = function(utci, category) {
   else if(utci>26)
     uriByUtci = "셔츠";
   else if(utci>9){
-    uriByUtci = "가디건";
+    uriByUtci = "셔츠";
     if(category){
     switch (category){
       case 1:
@@ -22,21 +23,29 @@ exports.GetUriByUTCI = function(utci, category) {
       case 3:
         uriByUtci = "신발"
         break;
-    }}
-  }
+      default:
+        break;
+  }}}
+
   else if(utci>0){
-    uriByUtci = "바지";
-    switch (category){
-      case 1:
-        uriByUtci = "셔츠"
-        break;
-      case 2:
-        uriByUtci = "바지"
-        break;
-      case 3:
-        uriByUtci = "신발"
-        break;
-    }}
+    uriByUtci = "가디건";
+    if(category){
+      switch (category){
+        case 1:
+          uriByUtci = "셔츠"
+          console.log("aa", uriByUtci);
+          break;
+        case 2:
+          uriByUtci = "바지"
+          console.log("bb", uriByUtci);
+          break;
+        case 3:
+          uriByUtci = "신발"
+          console.log("cc", uriByUtci);
+          break;
+        default:
+          break;
+  }}}
   else if(utci>-13)
     uriByUtci = "셔츠";
   else if(utci>27)

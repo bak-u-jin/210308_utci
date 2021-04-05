@@ -40,9 +40,6 @@ const category = [{
 
 function MoreShop({utci}) {
   const [moreToggle,setMoreToggle] = useState(false);
-  const [shopTop, setShopTop] = useState(0);
-  const [shopBottom, setShopBottom] = useState(0);
-  const [shopShoes, setShoes] = useState(0);
   const [shopItem, setShopItem] = useReducer(putShopItem, nullShopItems)
 
   
@@ -58,8 +55,8 @@ function MoreShop({utci}) {
       category : category.id
     }).then(({data}) =>{
       setShopItem({type: `${category.item}`, items: data.items});
-      setShopTop(data.items);
       console.log("data.items",data.items);
+      console.log("data.items",category.item);
       console.log("shopItem",shopItem);
     }).catch(function (error){
       console.log(error);
@@ -78,9 +75,6 @@ function MoreShop({utci}) {
           moreToggle ? 
           (
             <>
-              {console.log("yes")}
-              {console.log("yyyy",shopItem)}
-
                 <D_shop>
                   {shopItem.top.map((itemNum) => 
                     React.createElement(
@@ -90,10 +84,8 @@ function MoreShop({utci}) {
                         style: {
                           display: "flex",
                           alignItems: "center"
-                        }
-                      }
+                      }}
                   ))}
-                {console.log(category)}
               </D_shop>
 
               <D_shop>
@@ -105,10 +97,8 @@ function MoreShop({utci}) {
                         style: {
                           display: "flex",
                           alignItems: "center"
-                        }
-                      }
+                      }}
                   ))}
-                {console.log(category)}
               </D_shop>
 
               <D_shop>
@@ -120,10 +110,8 @@ function MoreShop({utci}) {
                         style: {
                           display: "flex",
                           alignItems: "center"
-                        }
-                      }
+                      }}
                   ))}
-                {console.log(category)}
               </D_shop>
             </>
           ) : ( 

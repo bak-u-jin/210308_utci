@@ -9,9 +9,9 @@ exports.getShop = function (req, res) {
   utci = req.body.utci;
   category = req.body.category;
   console.log("utci is ",utci);
-  console.log("catgory is ", category);
+  console.log("category is ", category);
   shopUri = GetUriByUTCI.GetUriByUTCI(utci, category);
-
+  console.log("shopUri is ",shopUri);
   var api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI(shopUri) + '&display=5';
   var options = {
       url: api_url,

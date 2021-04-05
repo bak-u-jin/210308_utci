@@ -17,8 +17,8 @@ function Result(){
     
   const location = useLocation().state.pathNum;
 
-  let content = {};
-  const [utci, setUtci] = useState(0);
+  const [utci, setUTCI] = useState("Loading");
+  const [content, setContent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [shopMain, setShopMain] = useState(0);
 
@@ -30,9 +30,7 @@ function Result(){
       day: yesterday.realDay,
       time: yesterday.realTime
     }).then(({data})=>{
-      content = data;
-      setUtci(Cal_UTCI(content));
-      getShop(utci);
+      setContent(data);
     }).catch(function (error) {
       console.log(error);
     });
@@ -48,12 +46,21 @@ function Result(){
     }).catch(function (error){
       console.log(error);
     })
-
   }
 
   useEffect(()=>{
     getContent();
   }, []);
+
+  useEffect(()=>{
+    if(utci == "Loading", content != 0)
+      setUTCI(Cal_UTCI(content));
+  },[content]);
+
+  useEffect(()=>{
+    if(shopMain == 0 && utci != "Loading")
+      getShop(utci);
+  }, [utci]);
 
   return(
     <D_App>
