@@ -1,5 +1,6 @@
 import React, { useEffect, useReducer, useState } from 'react';
 import styled, {css, keyframes} from 'styled-components';
+import GlobalStyle from '../GlobalStyle';
 import Axios from 'axios';
 import { IoIosArrowDown } from "react-icons/io";
 
@@ -41,7 +42,6 @@ const category = [{
 function MoreShop({utci}) {
   const [moreToggle,setMoreToggle] = useState(false);
   const [shopItem, setShopItem] = useReducer(putShopItem, nullShopItems)
-
   
   function handleToggle(){
     setMoreToggle(!moreToggle);
@@ -70,55 +70,67 @@ function MoreShop({utci}) {
 
   return(
     <>
+      <GlobalStyle/>
       <D_dummy id="dummy" moreToggle={moreToggle}>
         {
           moreToggle ? 
           (
             <>
-                <D_shop>
-                  {shopItem.top.map((itemNum) => 
-                    React.createElement(
-                      "img",{
-                        src: itemNum.image,
-                        height: "140px",
-                        style: {
-                          display: "flex",
-                          alignItems: "center"
-                      }}
-                  ))}
+              <D_category>상의</D_category>
+              <D_shop>
+                {shopItem.top.map((itemNum) => 
+                  React.createElement(
+                    "a",{
+                      href: itemNum.link,
+                      target: "_blank"
+                    },
+                    <I_item
+                      src={itemNum.image}
+                    />,
+                    <D_title>
+                      {itemNum.title}<br/>
+                      <strong>{itemNum.lprice}</strong>원
+                    </D_title>
+                ))}
               </D_shop>
-
+              
+              <D_category>하의</D_category>
               <D_shop>
                   {shopItem.bottom.map((itemNum) => 
                     React.createElement(
-                      "img",{
-                        src: itemNum.image,
-                        height: "140px",
-                        style: {
-                          display: "flex",
-                          alignItems: "center"
-                      }}
+                      "a",{
+                        href: itemNum.link,
+                        target: "_blank"
+                      },
+                      <I_item
+                        src={itemNum.image}
+                      />,
+                      <D_title>
+                        {itemNum.title}<br/>
+                        <strong>{itemNum.lprice}</strong>원
+                      </D_title>
                   ))}
               </D_shop>
-
+              
+              <D_category>신발</D_category>
               <D_shop>
                   {shopItem.shoes.map((itemNum) => 
                     React.createElement(
-                      "img",{
-                        src: itemNum.image,
-                        height: "140px",
-                        style: {
-                          display: "flex",
-                          alignItems: "center"
-                      }}
+                      "a",{
+                        href: itemNum.link,
+                        target: "_blank"
+                      },
+                      <I_item
+                        src={itemNum.image}
+                      />,
+                      <D_title>
+                        {itemNum.title}<br/>
+                        <strong>{itemNum.lprice}</strong>원
+                      </D_title>
                   ))}
               </D_shop>
             </>
-          ) : ( 
-            <> 
-            {console.log("no")}
-            </>
-          )
+          ):(<></>)
         }
       </D_dummy>
       <D_moreBar moreToggle={moreToggle}>
@@ -139,8 +151,9 @@ const unfoldIn = keyframes`
 
 const D_dummy = styled.div`
   width:100%;  
-  height:800px;
+  border-radius: 10px;
   margin-top: 20px;
+  padding-bottom: 20px;
   background: #a8d8ea;
   display: none;
   transform-origin: top;
@@ -154,20 +167,42 @@ const D_dummy = styled.div`
   }
 `;
 
+const D_category = styled.div`
+  margin: 12px 0 8px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+`;
+
 const D_shop = styled.div`
   display: flex;
   width: 100%;
-  margin-top: 10px;
   justify-content: space-around;
 
-  *{
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  a {
+    width: 20%;
+    text-align: center;
   }
 `;
 
+const D_title= styled.div`
+  margin: 2px auto 0 auto;
+  width:60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
+  text-align: center;
+`;
+
+const I_item = styled.img`
+  height: 140px;
+  display: 'flex';
+  alignItems: 'center';
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
+
 const D_moreBar = styled.div`
-  margin-top: 20px;
+  margin: 20px;
   text-align: center;
   transition: 0.4s;
 

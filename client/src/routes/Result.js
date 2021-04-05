@@ -9,6 +9,7 @@ import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
+import ShopTitle from '../components/ShopTitle';
 
 function Result(){
   
@@ -98,21 +99,21 @@ function Result(){
               <Emoticon_UTCI utci={utci}/>
             </D_result>
 
+              <ShopTitle utci={utci}/>
             <D_shop>
-              {
-                shopMain.map((itemNum) => 
-                React.createElement(
-                  "img",{
-                    src: itemNum.image,
-                    height: "140px",
-                    style: {
-                      display: "flex",
-                      alignItems: "center"
-                    }
-                  }
-                ))
-              }
-            </D_shop>
+                  {shopMain.map((itemNum) => 
+                    React.createElement(
+                      "a",{
+                        href: itemNum.link,
+                        target: "_blank"
+                      },
+                      <I_item src={itemNum.image}/>,
+                      <D_title>
+                        {itemNum.title}<br/>
+                        <strong>{itemNum.lprice}</strong>원
+                      </D_title>
+                  ))}
+              </D_shop>
 
             <MoreShop utci={utci}/>
           </>
@@ -167,12 +168,29 @@ const D_dataModal = styled.div`
 const D_shop = styled.div`
   display: flex;
   width: 100%;
+  margin-top: 20px;
   justify-content: space-around;
 
-  *{
-    border-radius: 10px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  a {
+    width: 20%;
+    text-align: center;
   }
 `;
 
+const I_item = styled.img`
+  height: 140px;
+  display: 'flex';
+  alignItems: 'center';
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+`;
+
+const D_title= styled.div`
+  margin: 2px auto 0 auto;
+  width:60%;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
+  text-align: center;
+`;
 export default Result;
