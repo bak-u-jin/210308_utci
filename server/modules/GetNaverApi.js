@@ -7,8 +7,10 @@ var client_secret = 'Nez5KbWj7L';
 
 exports.getShop = function (req, res) {
   utci = req.body.utci;
-
-  shopUri = GetUriByUTCI.GetUriByUTCI(utci);
+  category = req.body.category;
+  console.log("utci is ",utci);
+  console.log("catgory is ", category);
+  shopUri = GetUriByUTCI.GetUriByUTCI(utci, category);
 
   var api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI(shopUri) + '&display=5';
   var options = {

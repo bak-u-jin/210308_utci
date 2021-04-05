@@ -17,10 +17,10 @@ function Result(){
     
   const location = useLocation().state.pathNum;
 
-  const [content,setContent] = useState(0);
-  const [utci,setUTCI] = useState(0);
+  let content = {};
+  const [utci, setUtci] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
-  const [shopItems, setShopItems] = useState(0);
+  const [shopMain, setShopMain] = useState(0);
 
   let yesterday = getDay();
 
@@ -30,36 +30,30 @@ function Result(){
       day: yesterday.realDay,
       time: yesterday.realTime
     }).then(({data})=>{
-      setContent(data);
+      content = data;
+      setUtci(Cal_UTCI(content));
+      getShop(utci);
     }).catch(function (error) {
       console.log(error);
     });
   }
 
-  async function getShop(utci){
-    await Axios.post('http://localhost:3002/shopping',{
+  function getShop(utci){
+    Axios.post('http://localhost:3002/shopping',{
       utci
     }).then(
       ({data}) =>{
-        setShopItems(data.items);
+        setShopMain(data.items);
+        setIsLoading(false);
     }).catch(function (error){
       console.log(error);
     })
 
-    setIsLoading(false);
   }
 
   useEffect(()=>{
     getContent();
   }, []);
-
-  useEffect(()=>{
-    setUTCI(Cal_UTCI(content));
-  },[content]);
-  
-  useEffect(()=>{
-    getShop(utci);
-  },[utci]);
 
   return(
     <D_App>
@@ -69,7 +63,8 @@ function Result(){
           <h4>Loading...</h4>
         ) : (
           <>
-              <D_data>
+            <D_result>
+              <D_dataModal>
                 <p>
                   시간: {content.tm}
                 </p>
@@ -91,14 +86,14 @@ function Result(){
                 <p>
                   UTCI: {utci}
                 </p>
-              </D_data>
-            <D_result>
+              </D_dataModal>
+            
               <Emoticon_UTCI utci={utci}/>
             </D_result>
 
             <D_shop>
               {
-                shopItems.map((itemNum) => 
+                shopMain.map((itemNum) => 
                 React.createElement(
                   "img",{
                     src: itemNum.image,
@@ -112,7 +107,7 @@ function Result(){
               }
             </D_shop>
 
-            <MoreShop/>
+            <MoreShop utci={utci}/>
           </>
         )
       }
@@ -127,12 +122,18 @@ const D_App = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  `;
-  
-  const D_data = styled.div`
+`;
+
+const D_result = styled.div`
+  position: relative;
+  width:100%;
+  height:700px;
+`;
+
+const D_dataModal = styled.div`
   position: absolute;
-  top: 60px;
-  left: 60px;
+  top: 20px;
+  left: 20px;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
@@ -140,7 +141,7 @@ const D_App = styled.div`
   justify-content: center;
   align-items: center;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  
+
   @media only screen and (min-width:720px){
     width: 210px;
     height: 200px;
@@ -154,10 +155,6 @@ const D_App = styled.div`
   p{
     margin:2px 0;
   }
-`;
-
-const D_result = styled.div`
-  height:700px;
 `;
 
 const D_shop = styled.div`

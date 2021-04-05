@@ -1,61 +1,144 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useReducer, useState } from 'react';
 import styled, {css, keyframes} from 'styled-components';
+import Axios from 'axios';
 import { IoIosArrowDown } from "react-icons/io";
 
+const category = [{
+    id: 1,
+    item:"top"
+  },
+  {
+    id: 2,
+    item:"bottom"
+  },
+  {
+    id: 3,
+    item:"shoes"
+  }]
 
-function MoreShop() {
+  const nullShopItems ={
+    top: [],
+    bottom: [],
+    shoes: [],
+  }
+
+  function putShopItem(state, action){
+    switch(action.type){
+      case "top":{
+        return {...state, top: action.items}
+      }
+
+      case "bottom":{
+        return {...state, bottom: action.items}
+      }
+
+      case "shoes":{
+        return {...state, shoes: action.items}
+      }
+    }
+  }
+
+function MoreShop({utci}) {
   const [moreToggle,setMoreToggle] = useState(false);
+  const [shopTop, setShopTop] = useState(0);
+  const [shopBottom, setShopBottom] = useState(0);
+  const [shopShoes, setShoes] = useState(0);
+  const [shopItem, setShopItem] = useReducer(putShopItem, nullShopItems)
+
   
   function handleToggle(){
     setMoreToggle(!moreToggle);
   }
+  
+  async function getShop(utci, category){
+    console.log("utci=",utci);
+    console.log("category=",category.item);
+    await Axios.post('http://localhost:3002/shopping',{
+      utci,
+      category : category.id
+    }).then(({data}) =>{
+      setShopItem({type: `${category.item}`, items: data.items});
+      setShopTop(data.items);
+      console.log("data.items",data.items);
+      console.log("shopItem",shopItem);
+    }).catch(function (error){
+      console.log(error);
+    })
+  }
+
+  useEffect(() => {
+    for(let i=0; i<3; i++)
+      getShop(utci, category[i]);
+  },[])
 
   return(
     <>
-      {moreToggle ? (
-          <>
-          </>
-        ) : (
-          <>
-          </>
-        )
-      }
-      
-      <D_dummy id="dummy" moreToggle={moreToggle}/>
+      <D_dummy id="dummy" moreToggle={moreToggle}>
+        {
+          moreToggle ? 
+          (
+            <>
+              {console.log("yes")}
+              {console.log("yyyy",shopItem)}
+
+                <D_shop>
+                  {shopItem.top.map((itemNum) => 
+                    React.createElement(
+                      "img",{
+                        src: itemNum.image,
+                        height: "140px",
+                        style: {
+                          display: "flex",
+                          alignItems: "center"
+                        }
+                      }
+                  ))}
+                {console.log(category)}
+              </D_shop>
+
+              <D_shop>
+                  {shopItem.bottom.map((itemNum) => 
+                    React.createElement(
+                      "img",{
+                        src: itemNum.image,
+                        height: "140px",
+                        style: {
+                          display: "flex",
+                          alignItems: "center"
+                        }
+                      }
+                  ))}
+                {console.log(category)}
+              </D_shop>
+
+              <D_shop>
+                  {shopItem.shoes.map((itemNum) => 
+                    React.createElement(
+                      "img",{
+                        src: itemNum.image,
+                        height: "140px",
+                        style: {
+                          display: "flex",
+                          alignItems: "center"
+                        }
+                      }
+                  ))}
+                {console.log(category)}
+              </D_shop>
+            </>
+          ) : ( 
+            <> 
+            {console.log("no")}
+            </>
+          )
+        }
+      </D_dummy>
       <D_moreBar moreToggle={moreToggle}>
         <IoIosArrowDown size="30px" onClick={handleToggle}/>
       </D_moreBar>
     </>
   )
 }
-
-// async function getShop(utci){
-//   await Axios.post('http://localhost:3002/shopping',{
-//     utci
-//   }).then(
-//     ({data}) =>{
-//       setShopItems(data.items);
-//   }).catch(function (error){
-//     console.log(error);
-//   })
-
-//   setIsLoading(false);
-// }
-
-// {
-//   shopItems.map((itemNum) => 
-//   React.createElement(
-//     "img",{
-//       src: itemNum.image,
-//       height: "140px",
-//       style: {
-//         display: "flex",
-//         alignItems: "center"
-//       }
-//     }
-//   ))
-// }
-
 
 const unfoldIn = keyframes`
   0% {
@@ -83,6 +166,17 @@ const D_dummy = styled.div`
   }
 `;
 
+const D_shop = styled.div`
+  display: flex;
+  width: 100%;
+  margin-top: 10px;
+  justify-content: space-around;
+
+  *{
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  }
+`;
 
 const D_moreBar = styled.div`
   margin-top: 20px;
