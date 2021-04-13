@@ -10,6 +10,7 @@ import getDay from '../components/getDay';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
 import ShopTitle from '../components/ShopTitle';
+import DataModal from '../components/DataModal';
 
 function Result(){
   
@@ -72,34 +73,43 @@ function Result(){
         ) : (
           <>
             <D_result>
-              <D_dataModal>
-                <p>
-                  시간: {content.tm}
-                </p>
-                <p>
+              <DataModal
+                time={yesterday.realTime}
+                content = {content}
+                utci = {utci}
+                />
+              {/* <U_dataModal>
+                <li>
+                  시간: {yesterday.realTime}:00
+                </li>
+                <li>
                   장소: {content.stnNm}
-                </p>
-                <p>
-                  기온: {content.ta}
-                </p>
-                <p>
-                  복사온도: {content.ts}
-                </p>
-                <p>
-                  풍속: {content.ws}
-                </p>
-                <p>
-                  습도: {content.hm}
-                </p>
-                <p>
-                  UTCI: {utci}
-                </p>
-              </D_dataModal>
+                </li>
+                <li>
+                  기온: {content.ta}°C
+                </li>
+                <li>
+                  복사온도: {content.ts}°C
+                </li>
+                <li>
+                  풍속: {content.ws}m/s
+                </li>
+                <li>
+                  습도: {content.hm}%
+                </li>
+                <li>
+                  UTCI: {utci}°C
+                </li>
+              </U_dataModal> */}
             
               <Emoticon_UTCI utci={utci}/>
             </D_result>
 
-              <ShopTitle utci={utci}/>
+            {/* <ShopTitle utci={utci}/> */}
+            <D_moreTitle>
+              <D_mainTitle>Main Item</D_mainTitle>
+              <D_SubTitle>오늘의 메인 아이템!</D_SubTitle>
+            </D_moreTitle>
             <D_shop>
                   {shopMain.map((itemNum) => 
                     React.createElement(
@@ -114,7 +124,10 @@ function Result(){
                       </D_title>
                   ))}
               </D_shop>
-
+            <D_moreTitle>
+              <D_mainTitle>Sub Item</D_mainTitle>
+              <D_SubTitle>메인 아이템과 어울리는 아이템!</D_SubTitle>
+            </D_moreTitle>
             <MoreShop utci={utci}/>
           </>
         )
@@ -135,24 +148,24 @@ const D_App = styled.div`
 const D_result = styled.div`
   position: relative;
   width:100%;
-  height:700px;
+  height:600px;
 `;
 
-const D_dataModal = styled.div`
+const U_dataModal = styled.ul`
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 30px;
+  left: 160px;
+  padding: 20px;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
   @media only screen and (min-width:720px){
-    width: 210px;
-    height: 200px;
+    width: 300px;
+    height: 400px;
   }
 
   @media only screen and (max-width:720px){
@@ -160,24 +173,26 @@ const D_dataModal = styled.div`
     height: 340px;
   }
 
-  p{
+  li{
     margin:2px 0;
+    font-size: 2rem;
   }
 `;
 
 const D_shop = styled.div`
+  margin-top: 20px;
   display: flex;
   width: 100%;
-  margin-top: 20px;
   justify-content: space-around;
 
   a {
     width: 20%;
-    text-align: center;
   }
 `;
 
 const I_item = styled.img`
+  display: block;
+  margin: 0 auto;
   height: 140px;
   display: 'flex';
   alignItems: 'center';
@@ -188,9 +203,25 @@ const I_item = styled.img`
 const D_title= styled.div`
   margin: 2px auto 0 auto;
   width:60%;
+  font-size: 12px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis; 
+`;
+
+const D_moreTitle = styled.div`
   text-align: center;
 `;
+
+const D_mainTitle = styled.div`
+  margin-top: 30px;
+  font-size: 30px;
+  font-weight: bold;
+`;
+
+const D_SubTitle = styled.div`
+  font-size: 12px;
+  color: #999;
+`;
+
 export default Result;

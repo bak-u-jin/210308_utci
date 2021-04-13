@@ -71,11 +71,10 @@ function MoreShop({utci}) {
   return(
     <>
       <GlobalStyle/>
-      <D_dummy id="dummy" moreToggle={moreToggle}>
         {
           moreToggle ? 
           (
-            <>
+            <D_MoreArea moreToggle={moreToggle}>
               <D_category>상의</D_category>
               <D_shop>
                 {shopItem.top.map((itemNum) => 
@@ -124,15 +123,15 @@ function MoreShop({utci}) {
                         src={itemNum.image}
                       />,
                       <D_title>
-                        {itemNum.title}<br/>
+                        <p>{itemNum.title}  </p>
                         <strong>{itemNum.lprice}</strong>원
                       </D_title>
                   ))}
               </D_shop>
-            </>
+            </D_MoreArea>
           ):(<></>)
         }
-      </D_dummy>
+      <H_moreLine/>
       <D_moreBar moreToggle={moreToggle}>
         <IoIosArrowDown size="30px" onClick={handleToggle}/>
       </D_moreBar>
@@ -149,14 +148,14 @@ const unfoldIn = keyframes`
   }
 `;
 
-const D_dummy = styled.div`
+const D_MoreArea = styled.div`
   width:100%;  
   border-radius: 10px;
-  margin-top: 20px;
+  // margin-top: 20px;
   padding-bottom: 20px;
-  background: #a8d8ea;
   display: none;
   transform-origin: top;
+  translate:2s;
   
   ${props =>
     (props.moreToggle == true) &&
@@ -168,9 +167,10 @@ const D_dummy = styled.div`
 `;
 
 const D_category = styled.div`
-  margin: 12px 0 8px 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  margin: 60px 0 30px 0px;
+  font-size: 20px;
+  font-weight: 700;
+  text-align: center;
 `;
 
 const D_shop = styled.div`
@@ -180,20 +180,12 @@ const D_shop = styled.div`
 
   a {
     width: 20%;
-    text-align: center;
   }
 `;
 
-const D_title= styled.div`
-  margin: 2px auto 0 auto;
-  width:60%;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis; 
-  text-align: center;
-`;
-
 const I_item = styled.img`
+  display: block;
+  margin: 0 auto;
   height: 140px;
   display: 'flex';
   alignItems: 'center';
@@ -201,17 +193,40 @@ const I_item = styled.img`
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
+const D_title= styled.div`
+  margin: 2px auto 0 auto;
+  width:60%;
+  font-size: 12px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis; 
+`;
+
+const H_moreLine = styled.hr`
+  margin-top:30px;
+  width: 100%;
+  border: none;
+  border-top: 2px dashed #666;
+`;
+
 const D_moreBar = styled.div`
-  margin: 20px;
   text-align: center;
   transition: 0.4s;
+  background: white;
+  width:40px;
+  margin:0 auto;
+  background: rgb(255, 255, 255);
+  margin-top: -16px;
 
   ${props =>
     (props.moreToggle == true) &&
     css`
       transform: rotate(180deg);
+      margin-top: -20px;
     `
   }
 `;
+
+
 
 export default MoreShop;

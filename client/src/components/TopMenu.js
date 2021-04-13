@@ -28,7 +28,6 @@ const N_TopMenu = styled.nav`
   display: flex;
   padding: 10px;
   margin: 0 auto;
-  // background: #defcf9;
   justify-content: space-between;
   align-items: center;
 `; 
@@ -41,7 +40,6 @@ const A_Login = styled.a`
   align-items : center;
   border-radius: 10px;
   transition : 0.1s;
-  font-family: 'Noto Sans KR', sans-serif;
   color: black;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 
