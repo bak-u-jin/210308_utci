@@ -8,14 +8,16 @@ function getDay(){
         total = 4;
 
   let now = new Date;
-  let yesterday = new Date(now.setDate(now.getDate() -1));
+  let yesterday = new Date();
+
+  yesterday.setDate(now.getDate() -1);
   let realDay = [];
-  
+
   realDay[year] = yesterday.getFullYear();
   realDay[month] = yesterday.getMonth()+1; 
   realDay[day] = yesterday.getDate();
   realDay[time] = yesterday.getHours();
-  
+
   for(let i=1; i<4; i++){
     realDay[i] = String(realDay[i]);
     realDay[i] = realDay[i].padStart(2,'0');

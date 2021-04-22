@@ -1,29 +1,29 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
+import Emoticon_UTCI from './Emoticon_UTCI';
 
-// time={yesterday.realTime}
-//                 content = {content}
-//                 utci = {utci}
+const text = 1;
 
 function DataModal({time, content, utci}){
   return(
     <U_dataModal>
-      <li>시간: {time}:00</li>
-      <li>장소: {content.stnNm}</li>
-      <li>기온: {content.ta}°C</li>
-      <li>복사온도: {content.ts}°C</li>
-      <li>풍속: {content.ws}m/s</li>
-      <li>습도: {content.hm}%</li>
-      <li>UTCI: {utci}°C</li>
+      <L_data title><Emoticon_UTCI utci={utci} type={text}/></L_data>
+      <L_data>시간: {time}:00</L_data>
+      <L_data>장소: {content.stnNm}</L_data>
+      <L_data>기온: {content.ta}°C</L_data>
+      <L_data>복사온도: {content.ts}°C</L_data>
+      <L_data>풍속: {content.ws}m/s</L_data>
+      <L_data>습도: {content.hm}%</L_data>
+      <L_data>UTCI: {utci}°C</L_data>
     </U_dataModal>
   )
 }
 
 const U_dataModal = styled.ul`
   position: absolute;
-  top: 30px;
-  left: 160px;
-  padding: 20px;
+  bottom: 30px;
+  right: 160px;
+  padding: 20px 60px;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
@@ -40,12 +40,17 @@ const U_dataModal = styled.ul`
     width: 240px;
     height: 340px;
   }
+`;
 
-  li{
-    margin:2px 0;
+const L_data = styled.li`
+  margin:2px 0;
+  font-size: 1.4rem;
+
+  ${props => props.title && css`
     font-size: 2rem;
-  }
-
+    margin-bottom: 20px;
+    font-weight: 600;
+  `}
 `;
 
 export default DataModal;

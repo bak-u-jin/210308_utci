@@ -45,19 +45,19 @@ function MoreShop({utci}) {
   
   function handleToggle(){
     setMoreToggle(!moreToggle);
+    if(!moreToggle){
+      setTimeout(() => {
+        window.scrollTo({top:8000, behavior:'smooth'});
+      }, 0);
+    }
   }
   
   async function getShop(utci, category){
-    console.log("utci=",utci);
-    console.log("category=",category.item);
     await Axios.post('http://localhost:3002/shopping',{
       utci,
       category : category.id
     }).then(({data}) =>{
       setShopItem({type: `${category.item}`, items: data.items});
-      console.log("data.items",data.items);
-      console.log("data.items",category.item);
-      console.log("shopItem",shopItem);
     }).catch(function (error){
       console.log(error);
     })
@@ -129,7 +129,10 @@ function MoreShop({utci}) {
                   ))}
               </D_shop>
             </D_MoreArea>
-          ):(<></>)
+          ):(
+            <>
+            </>
+          )
         }
       <H_moreLine/>
       <D_moreBar moreToggle={moreToggle}>
@@ -151,7 +154,6 @@ const unfoldIn = keyframes`
 const D_MoreArea = styled.div`
   width:100%;  
   border-radius: 10px;
-  // margin-top: 20px;
   padding-bottom: 20px;
   display: none;
   transform-origin: top;

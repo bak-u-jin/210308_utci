@@ -13,8 +13,8 @@ function TopMenu(){
           <img src={logo} alt="logo" height="30px" />
         </Link>
 
-        <Link to="">
-          <A_Login>Log In</A_Login>
+        <Link to="#">
+          <S_Login>Log In</S_Login>
         </Link>
       </HashRouter>
     </N_TopMenu>
@@ -32,7 +32,7 @@ const N_TopMenu = styled.nav`
   align-items: center;
 `; 
 
-const A_Login = styled.a`
+const S_Login = styled.span`
   display: flex;
   height: 30px;
   width: 60px;

@@ -10,6 +10,10 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Noto Sans KR', sans-serif;
     list-style: none;
   }
+
+  body::-webkit-scrollbar {
+    display: none;
+}
 `;
 
 export default GlobalStyle;

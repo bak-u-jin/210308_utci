@@ -9,7 +9,6 @@ import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
-import ShopTitle from '../components/ShopTitle';
 import DataModal from '../components/DataModal';
 
 function Result(){
@@ -77,35 +76,12 @@ function Result(){
                 time={yesterday.realTime}
                 content = {content}
                 utci = {utci}
-                />
-              {/* <U_dataModal>
-                <li>
-                  시간: {yesterday.realTime}:00
-                </li>
-                <li>
-                  장소: {content.stnNm}
-                </li>
-                <li>
-                  기온: {content.ta}°C
-                </li>
-                <li>
-                  복사온도: {content.ts}°C
-                </li>
-                <li>
-                  풍속: {content.ws}m/s
-                </li>
-                <li>
-                  습도: {content.hm}%
-                </li>
-                <li>
-                  UTCI: {utci}°C
-                </li>
-              </U_dataModal> */}
-            
-              <Emoticon_UTCI utci={utci}/>
+              />
+              <D_codi>
+                <Emoticon_UTCI utci={utci}/>
+              </D_codi>
             </D_result>
 
-            {/* <ShopTitle utci={utci}/> */}
             <D_moreTitle>
               <D_mainTitle>Main Item</D_mainTitle>
               <D_SubTitle>오늘의 메인 아이템!</D_SubTitle>
@@ -151,32 +127,10 @@ const D_result = styled.div`
   height:600px;
 `;
 
-const U_dataModal = styled.ul`
-  position: absolute;
-  top: 30px;
+const D_codi = styled.div`
+  position:absolute;
   left: 160px;
-  padding: 20px;
-  border-radius: 10px;
-  background: #defcf9;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
-  @media only screen and (min-width:720px){
-    width: 300px;
-    height: 400px;
-  }
-
-  @media only screen and (max-width:720px){
-    width: 240px;
-    height: 340px;
-  }
-
-  li{
-    margin:2px 0;
-    font-size: 2rem;
-  }
+  top: 30px;
 `;
 
 const D_shop = styled.div`
