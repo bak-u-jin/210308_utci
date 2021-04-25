@@ -16,6 +16,10 @@ O_apiUrl.totalUrl = O_apiUrl.url + '?serviceKey=' + O_apiUrl.key + O_apiUrl.item
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 
+var headers = {
+	'Accept' : 'application/json'
+}
+
 exports.postUTCI = function(req, res) {
 	O_apiUrl.location = `&stnIds=${req.body.location}`;
 	O_apiUrl.startDate = `&startDt=${req.body.day}`;
@@ -28,7 +32,7 @@ exports.postUTCI = function(req, res) {
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 										
-	request({url: O_apiUrl.totalUrl}, (error, result) =>{
+	request({url: O_apiUrl.totalUrl, headers}, (error, result) =>{
 		const data = JSON.parse(result.body);
 		
 		const stringfyData = JSON.stringify(data.response.body.items.item[0]);
@@ -36,6 +40,12 @@ exports.postUTCI = function(req, res) {
 		res.send(stringfyData);
 	})
 };
+
+
+// 	'User-Agent':       'Super Agent/0.0.1',
+
+// 	'Content-Type':     "application/xml"	
+
 
 // const bodyParser = require('body-parser');
 // const mongoose = require('mongoose');

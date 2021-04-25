@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import {useLocation} from "react-router-dom";
 import Axios from 'axios';
 
+import {actions} from '../components/Store';
 import GlobalStyle from '../GlobalStyle';
 
 import Cal_UTCI from '../components/Cal_UTCI';
@@ -10,6 +11,7 @@ import getDay from '../components/getDay';
 import Emoticon_UTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
 import DataModal from '../components/DataModal';
+import Loading from '../components/Loading';
 
 function Result(){
   
@@ -18,7 +20,7 @@ function Result(){
     
   const location = useLocation().state.pathNum;
 
-  const [utci, setUTCI] = useState("Loading");
+  const [utci, setUTCI] = useState(false);
   const [content, setContent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [shopMain, setShopMain] = useState(0);
@@ -54,12 +56,12 @@ function Result(){
   }, []);
 
   useEffect(()=>{
-    if(utci == "Loading", content != 0)
+    if(utci == false, content != 0)
       setUTCI(Cal_UTCI(content));
   },[content]);
 
   useEffect(()=>{
-    if(shopMain == 0 && utci != "Loading")
+    if(shopMain == 0 && utci)
       getShop(utci);
   }, [utci]);
 
@@ -68,7 +70,7 @@ function Result(){
       <GlobalStyle/>
       {
         isLoading ? (
-          <h4>Loading...</h4>
+          <Loading/>
         ) : (
           <>
             <D_result>
@@ -114,6 +116,7 @@ function Result(){
 
 const D_App = styled.div`
   max-width: 1024px;
+  height:100%;
   display: flex;
   flex-direction : column;
   justify-content: center;

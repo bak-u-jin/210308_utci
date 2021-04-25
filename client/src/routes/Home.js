@@ -3,6 +3,8 @@ import Axios from 'axios';
 import styled from 'styled-components';
 import { useHistory } from "react-router-dom";
 
+import {add} from '../components/Store';
+import { connect } from "react-redux";
 import GlobalStyle from '../GlobalStyle';
 
 import getDay from '../components/getDay';
@@ -12,7 +14,15 @@ import Emoticon_UTCI from '../components/Emoticon_UTCI';
 import HowToUse from '../components/HowToUse';
 import { useCookies } from 'react-cookie';
 
-function Home() {
+
+
+function Home({toDos, addToDo}) {
+  console.log(toDos);
+  function clickPlus(){
+    console.log(toDos);
+    addToDo("1");
+  }
+
   const history = useHistory();
   let yesterday = getDay();
   let location;
@@ -78,7 +88,8 @@ function Home() {
             <Emoticon_UTCI utci={utci}/>
         </D_data>
       </M_main>
-      
+      {}
+      <button onClick={clickPlus}>Plus</button>
     </D_App>
   );
 }
@@ -111,4 +122,14 @@ const D_data = styled.div`
   }
 `;
 
-export default Home;
+function mapStateToProps(state) {
+  return { toDos: state };
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addToDo: text => dispatch(add(text))
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);
