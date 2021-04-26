@@ -10,12 +10,39 @@ import SouthChungCheong from '../paths/SouthChungCheong';
 import SouthGyeongsang from '../paths/SouthGyeongsang';
 import NorthGyeongsang from '../paths/NorthGyeongsang';
 
-function Map({handleMap, boxSize, HandleHover, HandleClick}){
+import { useHistory } from "react-router-dom";
+
+import {add} from './Store';
+import { connect } from 'react-redux';
+
+function Map({changePath, handleMap, boxSize, submitReview}){
+	const history = useHistory();
+
 	let timer;
 	const locationCity = [Country, Geyoungi, Gangwondo, SouthChungCheong, NorthChungcheong, SouthJeolla, NorthJeolla, SouthGyeongsang, NorthGyeongsang];
+	
+	function HandleClick (num, toMap, boxSize){
+		if(toMap){
+			changePath(toMap, boxSize);
+		}
+		else{
+			history.push({
+				pathname: "/result",
+				state: {
+					pathNum : num,
+				}
+			});
+		}
+	}
+
+	function HandleHover (num, toMap){
+    if(!toMap){
+      submitReview(num);
+    }
+  }
 
 	return(
-		<ASVG id="svgMap" xmlns="http://www.w3.org/2000/svg" width="40%" height="40%" viewBox={boxSize} styleMore="2">
+		<S_styled id="svgMap" xmlns="http://www.w3.org/2000/svg" viewBox={boxSize}>
 			{locationCity[handleMap].map(pathNum => React.createElement(
 				"path",{
 					key: pathNum.key,
@@ -26,25 +53,28 @@ function Map({handleMap, boxSize, HandleHover, HandleClick}){
 						if(pathNum.num || pathNum.toMap)
 							document.getElementById(`${pathNum.key}`).classList.add('mouseEnter');
 						
-						timer = setTimeout(
-							()=>HandleHover(pathNum.num,  pathNum.toMap), 1000
-							);
-						}),
+						timer = setTimeout(()=>
+							HandleHover(pathNum.num,  pathNum.toMap), 1000
+						)}),
 						onMouseLeave: (() =>{
 							clearTimeout(timer);
 							document.getElementById(`${pathNum.key}`).classList.remove('mouseEnter');
-					}),
-					onClick: (() =>{
-						if(pathNum.num || pathNum.toMap)
-							HandleClick(pathNum.num, pathNum.toMap, pathNum.boxSize);
+						}),
+						onClick: (() =>{
+							if(pathNum.num || pathNum.toMap)
+								HandleClick(pathNum.num, pathNum.toMap, pathNum.boxSize);
+							clearTimeout(timer);
 					})
 				}
 			))}
-		</ASVG>
+		</S_styled>
 	)
 }
 
-const ASVG = styled.svg`
+
+const S_styled = styled.svg`
+	width: 60%;
+	height: 60%;
 	path{
 		fill: #CCCCCC;
 		fill-opacity: 1;
@@ -58,7 +88,15 @@ const ASVG = styled.svg`
 	}
 `;
 
+function mapStateToProps(state) {
+  return { store: state };
+}
 
+function mapDispatchToProps(dispatch) {
+  return {
+    changePath: (text, num) => dispatch(add({text, num})),
+		// setPathNum: (pathNum) => dispatch(setPathNum({pathNum})),
+  };
+}
 
-
-export default Map;
+export default connect(mapStateToProps, mapDispatchToProps)(Map);

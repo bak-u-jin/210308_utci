@@ -9,6 +9,17 @@ const GlobalStyle = createGlobalStyle`
     color: #333333;
     font-family: 'Noto Sans KR', sans-serif;
     list-style: none;
+
+  }
+  
+  body *{
+    @media only screen and (min-width: 1024px) {
+      max-width: 1024px;
+    }
+
+    @media only screen and (min-width: 720px) {
+      max-width: 720px;
+    }
   }
 
   body::-webkit-scrollbar {

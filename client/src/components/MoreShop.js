@@ -17,27 +17,30 @@ const category = [{
     item:"shoes"
   }]
 
-  const nullShopItems ={
+const nullShopItems ={
     top: [],
     bottom: [],
     shoes: [],
-  }
+}
 
-  function putShopItem(state, action){
-    switch(action.type){
-      case "top":{
-        return {...state, top: action.items}
-      }
-
-      case "bottom":{
-        return {...state, bottom: action.items}
-      }
-
-      case "shoes":{
-        return {...state, shoes: action.items}
-      }
+function putShopItem(state, action){
+  switch(action.type){
+    case "top":{
+      return {...state, top: action.items}
     }
+
+    case "bottom":{
+      return {...state, bottom: action.items}
+    }
+
+    case "shoes":{
+      return {...state, shoes: action.items}
+    }
+
+    default:
+      return null;
   }
+}
 
 function MoreShop({utci}) {
   const [moreToggle,setMoreToggle] = useState(false);
@@ -74,12 +77,13 @@ function MoreShop({utci}) {
         {
           moreToggle ? 
           (
-            <D_MoreArea moreToggle={moreToggle}>
+            <D_moreArea moreToggle={moreToggle}>
               <D_category>상의</D_category>
               <D_shop>
                 {shopItem.top.map((itemNum) => 
                   React.createElement(
                     "a",{
+                      key: itemNum.title,
                       href: itemNum.link,
                       target: "_blank"
                     },
@@ -98,6 +102,7 @@ function MoreShop({utci}) {
                   {shopItem.bottom.map((itemNum) => 
                     React.createElement(
                       "a",{
+                        key: itemNum.title,
                         href: itemNum.link,
                         target: "_blank"
                       },
@@ -116,6 +121,7 @@ function MoreShop({utci}) {
                   {shopItem.shoes.map((itemNum) => 
                     React.createElement(
                       "a",{
+                        key: itemNum.title,
                         href: itemNum.link,
                         target: "_blank"
                       },
@@ -128,7 +134,7 @@ function MoreShop({utci}) {
                       </D_title>
                   ))}
               </D_shop>
-            </D_MoreArea>
+            </D_moreArea>
           ):(
             <>
             </>
@@ -151,7 +157,7 @@ const unfoldIn = keyframes`
   }
 `;
 
-const D_MoreArea = styled.div`
+const D_moreArea = styled.div`
   width:100%;  
   border-radius: 10px;
   padding-bottom: 20px;
@@ -160,7 +166,7 @@ const D_MoreArea = styled.div`
   translate:2s;
   
   ${props =>
-    (props.moreToggle == true) &&
+    (props.moreToggle === true) &&
     css `
     display: block;
     animation: ${unfoldIn} 1.4s;
@@ -195,7 +201,7 @@ const I_item = styled.img`
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
-const D_title= styled.div`
+const D_title = styled.div`
   margin: 2px auto 0 auto;
   width:60%;
   font-size: 12px;
@@ -221,14 +227,12 @@ const D_moreBar = styled.div`
   margin-top: -16px;
 
   ${props =>
-    (props.moreToggle == true) &&
+    (props.moreToggle === true) &&
     css`
       transform: rotate(180deg);
       margin-top: -20px;
     `
   }
 `;
-
-
 
 export default MoreShop;

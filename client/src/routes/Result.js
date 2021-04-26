@@ -3,12 +3,11 @@ import styled from 'styled-components';
 import {useLocation} from "react-router-dom";
 import Axios from 'axios';
 
-import {actions} from '../components/Store';
 import GlobalStyle from '../GlobalStyle';
 
 import Cal_UTCI from '../components/Cal_UTCI';
 import getDay from '../components/getDay';
-import Emoticon_UTCI from '../components/Emoticon_UTCI';
+import EmoticonUTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
 import DataModal from '../components/DataModal';
 import Loading from '../components/Loading';
@@ -46,27 +45,27 @@ function Result(){
       ({data}) =>{
         setShopMain(data.items);
         setIsLoading(false);
-    }).catch(function (error){
-      console.log(error);
-    })
-  }
-
-  useEffect(()=>{
-    getContent();
-  }, []);
-
-  useEffect(()=>{
-    if(utci == false, content != 0)
+      }).catch(function (error){
+        console.log(error);
+      })
+    }
+    
+    useEffect(()=>{
+      getContent();
+    }, []);
+    
+    useEffect(()=>{
+      if(utci === false && content !== 0)
       setUTCI(Cal_UTCI(content));
-  },[content]);
-
-  useEffect(()=>{
-    if(shopMain == 0 && utci)
-      getShop(utci);
-  }, [utci]);
-
-  return(
-    <D_App>
+    },[content]);
+    
+    useEffect(()=>{
+      if(shopMain === 0 && utci)
+        getShop(utci);
+    }, [utci]);
+    
+    return(
+      <D_app>
       <GlobalStyle/>
       {
         isLoading ? (
@@ -74,47 +73,51 @@ function Result(){
         ) : (
           <>
             <D_result>
+              <D_codi>
+                <EmoticonUTCI utci={utci}/>
+              </D_codi>
               <DataModal
                 time={yesterday.realTime}
                 content = {content}
                 utci = {utci}
               />
-              <D_codi>
-                <Emoticon_UTCI utci={utci}/>
-              </D_codi>
             </D_result>
 
             <D_moreTitle>
               <D_mainTitle>Main Item</D_mainTitle>
-              <D_SubTitle>오늘의 메인 아이템!</D_SubTitle>
+              <D_subTitle>오늘의 메인 아이템!</D_subTitle>
             </D_moreTitle>
             <D_shop>
-                  {shopMain.map((itemNum) => 
-                    React.createElement(
-                      "a",{
-                        href: itemNum.link,
-                        target: "_blank"
-                      },
-                      <I_item src={itemNum.image}/>,
-                      <D_title>
-                        {itemNum.title}<br/>
-                        <strong>{itemNum.lprice}</strong>원
-                      </D_title>
-                  ))}
-              </D_shop>
+              {window.innerWidth<= 720 ?
+                (delete shopMain.[3],delete shopMain.[4])
+                :(<></>)}
+              {shopMain.map((itemNum) => 
+                React.createElement(
+                  "a",{
+                    key: itemNum.title,
+                    href: itemNum.link,
+                    target: "_blank"
+                  },
+                  <I_item src={itemNum.image}/>,
+                  <D_title>
+                    {itemNum.title}<br/>
+                    <strong>{itemNum.lprice}</strong>원
+                  </D_title>
+              ))}
+            </D_shop>
             <D_moreTitle>
               <D_mainTitle>Sub Item</D_mainTitle>
-              <D_SubTitle>메인 아이템과 어울리는 아이템!</D_SubTitle>
+              <D_subTitle>메인 아이템과 어울리는 아이템!</D_subTitle>
             </D_moreTitle>
             <MoreShop utci={utci}/>
           </>
         )
       }
-    </D_App>
+    </D_app>
   )
 }
 
-const D_App = styled.div`
+const D_app = styled.div`
   max-width: 1024px;
   height:100%;
   display: flex;
@@ -122,18 +125,28 @@ const D_App = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
+  padding: 0 10px;
 `;
 
 const D_result = styled.div`
   position: relative;
   width:100%;
-  height:600px;
+  height: 530px;
+
+  @media only screen and (min-width:720px){
+    height:600px;
+  }
 `;
 
 const D_codi = styled.div`
   position:absolute;
-  left: 160px;
   top: 30px;
+  height:200px;
+  z-index: 1;
+
+  @media only screen and (min-width:720px){
+    height: 400px;
+  }
 `;
 
 const D_shop = styled.div`
@@ -143,16 +156,19 @@ const D_shop = styled.div`
   justify-content: space-around;
 
   a {
-    width: 20%;
+    width:30%;
+    @media only screen and (min-width:720px){
+      width: 18%;
+    }
   }
 `;
 
 const I_item = styled.img`
   display: block;
   margin: 0 auto;
-  height: 140px;
-  display: 'flex';
-  alignItems: 'center';
+  width: 100%;
+  display: flex;
+  alignItems: center;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
@@ -176,7 +192,7 @@ const D_mainTitle = styled.div`
   font-weight: bold;
 `;
 
-const D_SubTitle = styled.div`
+const D_subTitle = styled.div`
   font-size: 12px;
   color: #999;
 `;

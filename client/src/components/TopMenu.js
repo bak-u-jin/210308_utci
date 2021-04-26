@@ -14,7 +14,7 @@ function TopMenu(){
         </Link>
 
         <Link to="#">
-          <S_Login>Log In</S_Login>
+          <S_login>Log In</S_login>
         </Link>
       </HashRouter>
     </N_TopMenu>
@@ -22,7 +22,6 @@ function TopMenu(){
 }
 
 const N_TopMenu = styled.nav`
-  max-width: 1024px;
   width: 100%;
   height: 60px;
   display: flex;
@@ -32,7 +31,7 @@ const N_TopMenu = styled.nav`
   align-items: center;
 `; 
 
-const S_Login = styled.span`
+const S_login = styled.span`
   display: flex;
   height: 30px;
   width: 60px;
@@ -47,11 +46,6 @@ const S_Login = styled.span`
     transform : scale(0.94);
     background: rgb(240, 240, 240);
   }
-`;
-
-
-const B_Login = styled.div`
-
 `;
 
 export default TopMenu;

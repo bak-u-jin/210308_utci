@@ -1,5 +1,3 @@
-import React from 'react';
-
 function getDay(){
   const year = 0,
         month = 1,
@@ -7,7 +5,7 @@ function getDay(){
         time = 3,
         total = 4;
 
-  let now = new Date;
+  let now = new Date();
   let yesterday = new Date();
 
   yesterday.setDate(now.getDate() -1);

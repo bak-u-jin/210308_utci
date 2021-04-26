@@ -2,12 +2,10 @@ import React from 'react';
 import styled, { css } from 'styled-components';
 import Emoticon_UTCI from './Emoticon_UTCI';
 
-const text = 1;
-
 function DataModal({time, content, utci}){
   return(
     <U_dataModal>
-      <L_data title><Emoticon_UTCI utci={utci} type={text}/></L_data>
+      <L_data title="true"><Emoticon_UTCI utci={utci} type={true}/></L_data>
       <L_data>시간: {time}:00</L_data>
       <L_data>장소: {content.stnNm}</L_data>
       <L_data>기온: {content.ta}°C</L_data>
@@ -21,36 +19,36 @@ function DataModal({time, content, utci}){
 
 const U_dataModal = styled.ul`
   position: absolute;
-  bottom: 30px;
-  right: 160px;
-  padding: 20px 60px;
+  right: 0px;
+  bottom: 0px;
   border-radius: 10px;
   background: #defcf9;
   display: flex;
   flex-direction: column;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-
+  width: 260px;
+  padding: 10px 40px;
+  
   @media only screen and (min-width:720px){
     width: 300px;
     height: 400px;
-  }
-
-  @media only screen and (max-width:720px){
-    width: 240px;
-    height: 340px;
+    padding: 20px 60px;
+    bottom: 30px;
   }
 `;
 
 const L_data = styled.li`
-  margin:2px 0;
   font-size: 1.4rem;
+  margin:2px 0;
 
   ${props => props.title && css`
-    font-size: 2rem;
-    margin-bottom: 20px;
-    font-weight: 600;
-  `}
+    @media only screen and (min-width:720px){
+      font-size: 2rem;
+      margin-bottom: 20px;
+      font-weight: 600;
+      }
+    `}
 `;
 
 export default DataModal;
