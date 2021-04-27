@@ -184,19 +184,34 @@ const D_category = styled.div`
 const D_shop = styled.div`
   display: flex;
   width: 100%;
+  height: 30vw;
+  max-height: 150px;
   justify-content: space-around;
 
   a {
-    width: 20%;
+    width:30%;
+  }
+
+  a:nth-child(3) ~ *{
+      display: none;
+  }
+
+  @media only screen and (min-width:720px){
+    a{
+      width: 18%;
+    }
+
+    a:nth-child(3) ~ *{
+      display:block;
+    }
   }
 `;
 
 const I_item = styled.img`
   display: block;
   margin: 0 auto;
-  height: 140px;
-  display: 'flex';
-  alignItems: 'center';
+  height: 80%;
+  max-height: 120px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;

@@ -11,9 +11,9 @@ import EmoticonUTCI from '../components/Emoticon_UTCI';
 import MoreShop from '../components/MoreShop';
 import DataModal from '../components/DataModal';
 import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 function Result(){
-  
   if(useLocation().state === undefined)
     window.location.replace("/");
     
@@ -23,6 +23,7 @@ function Result(){
   const [content, setContent] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [shopMain, setShopMain] = useState(0);
+  const [isError, setIsError] = useState(false);
 
   let yesterday = getDay();
 
@@ -35,6 +36,7 @@ function Result(){
       setContent(data);
     }).catch(function (error) {
       console.log(error);
+      setIsError(true);
     });
   }
 
@@ -69,7 +71,13 @@ function Result(){
       <GlobalStyle/>
       {
         isLoading ? (
-          <Loading/>
+          <>
+            {isError ? (
+              <Error/>
+              ):(
+              <Loading/>
+            )}
+          </>
         ) : (
           <>
             <D_result>
@@ -88,9 +96,7 @@ function Result(){
               <D_subTitle>오늘의 메인 아이템!</D_subTitle>
             </D_moreTitle>
             <D_shop>
-              {window.innerWidth<= 720 ?
-                (delete shopMain.[3],delete shopMain.[4])
-                :(<></>)}
+              {console.log(shopMain)}
               {shopMain.map((itemNum) => 
                 React.createElement(
                   "a",{
@@ -125,7 +131,7 @@ const D_app = styled.div`
   justify-content: center;
   align-items: center;
   margin: 0 auto;
-  padding: 0 10px;
+  padding: 0 20px;
 `;
 
 const D_result = styled.div`
@@ -141,7 +147,8 @@ const D_result = styled.div`
 const D_codi = styled.div`
   position:absolute;
   top: 30px;
-  height:200px;
+  height: 50vw;
+  min-height: 200px;
   z-index: 1;
 
   @media only screen and (min-width:720px){
@@ -153,12 +160,25 @@ const D_shop = styled.div`
   margin-top: 20px;
   display: flex;
   width: 100%;
+  height: 30vw;
+  max-height: 150px;
   justify-content: space-around;
 
   a {
     width:30%;
-    @media only screen and (min-width:720px){
+  }
+
+  a:nth-child(3) ~ *{
+      display: none;
+  }
+
+  @media only screen and (min-width:720px){
+    a{
       width: 18%;
+    }
+
+    a:nth-child(3) ~ *{
+      display:block;
     }
   }
 `;
@@ -166,9 +186,8 @@ const D_shop = styled.div`
 const I_item = styled.img`
   display: block;
   margin: 0 auto;
-  width: 100%;
-  display: flex;
-  alignItems: center;
+  height: 80%;
+  max-height: 120px;
   border-radius: 10px;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;

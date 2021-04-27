@@ -43,7 +43,7 @@ function Home({store}) {
       <HowToUse/>
       
       <M_main>
-        <Map handleMap={store.pathLocation} boxSize={store.value} submitReview={submitReview}/>
+        <Map handleMap={store.pathLocation} boxSize={store.boxSize} submitReview={submitReview}/>
         <D_data>
           <D_ImgSize>
             <Emoticon_UTCI utci={utci} location={locMain}/>
@@ -58,6 +58,7 @@ function Home({store}) {
 }
 
 const D_App = styled.div`
+  padding: 0 10px;
 `;
 
 const M_main = styled.div`
@@ -72,8 +73,8 @@ const M_main = styled.div`
 const D_data = styled.div`
   display: inline-block;
   border-radius: 10px;
-  background: #defcf9;
   text-align: center;
+  background: #defcf9;
   box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   
   width: 120px;

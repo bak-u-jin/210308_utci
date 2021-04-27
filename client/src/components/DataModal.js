@@ -27,7 +27,6 @@ const U_dataModal = styled.ul`
   flex-direction: column;
   justify-content: center;
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-  width: 260px;
   padding: 10px 40px;
   
   @media only screen and (min-width:720px){

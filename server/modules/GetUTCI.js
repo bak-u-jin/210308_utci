@@ -33,6 +33,7 @@ exports.postUTCI = function(req, res) {
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 										
 	request({url: O_apiUrl.totalUrl, headers}, (error, result) =>{
+		console.log(result);
 		const data = JSON.parse(result.body);
 		
 		const stringfyData = JSON.stringify(data.response.body.items.item[0]);

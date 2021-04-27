@@ -12,7 +12,7 @@ import NorthGyeongsang from '../paths/NorthGyeongsang';
 
 import { useHistory } from "react-router-dom";
 
-import {add} from './Store';
+import {changeMap} from './Store';
 import { connect } from 'react-redux';
 
 function Map({changePath, handleMap, boxSize, submitReview}){
@@ -51,7 +51,7 @@ function Map({changePath, handleMap, boxSize, submitReview}){
 					className: pathNum.class,
 					onMouseEnter: (() =>{
 						if(pathNum.num || pathNum.toMap)
-							document.getElementById(`${pathNum.key}`).classList.add('mouseEnter');
+							document.getElementById(`${pathNum.key}`).classList.changeMap('mouseEnter');
 						
 						timer = setTimeout(()=>
 							HandleHover(pathNum.num,  pathNum.toMap), 1000
@@ -94,8 +94,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    changePath: (text, num) => dispatch(add({text, num})),
-		// setPathNum: (pathNum) => dispatch(setPathNum({pathNum})),
+    changePath: (toMap, boxSize) => dispatch(changeMap({toMap, boxSize})),
   };
 }
 

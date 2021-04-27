@@ -2,20 +2,28 @@ import React from 'react';
 import styled from 'styled-components';
 import { HashRouter , Link } from 'react-router-dom';
 
+import {changeMap} from './Store';
+import { connect } from 'react-redux';
+
 import logo from '../img/logo.svg';
 
-function TopMenu(){
+function TopMenu({changePath}){
+
+  function logoClick(){
+    const boxSize = "0 150 560 700";
+    const toMap = 0;
+    changePath(toMap, boxSize);
+  }
+
   return(
     <N_TopMenu>
       
       <HashRouter>
         <Link to="/">
-          <img src={logo} alt="logo" height="30px" />
+          <img src={logo} alt="logo" height="30px" onClick={logoClick}/>
         </Link>
 
-        <Link to="#">
-          <S_login>Log In</S_login>
-        </Link>
+
       </HashRouter>
     </N_TopMenu>
   );
@@ -27,25 +35,13 @@ const N_TopMenu = styled.nav`
   display: flex;
   padding: 10px;
   margin: 0 auto;
-  justify-content: space-between;
   align-items: center;
 `; 
 
-const S_login = styled.span`
-  display: flex;
-  height: 30px;
-  width: 60px;
-  justify-content: center;
-  align-items : center;
-  border-radius: 10px;
-  transition : 0.1s;
-  color: black;
-  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+function mapDispatchToProps(dispatch) {
+  return {
+    changePath: (toMap, boxSize) => dispatch(changeMap({toMap, boxSize})),
+  };
+}
 
-  &:active{
-    transform : scale(0.94);
-    background: rgb(240, 240, 240);
-  }
-`;
-
-export default TopMenu;
+export default connect(null, mapDispatchToProps)(TopMenu);
