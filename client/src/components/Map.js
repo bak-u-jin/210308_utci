@@ -51,7 +51,7 @@ function Map({changePath, handleMap, boxSize, submitReview}){
 					className: pathNum.class,
 					onMouseEnter: (() =>{
 						if(pathNum.num || pathNum.toMap)
-							document.getElementById(`${pathNum.key}`).classList.changeMap('mouseEnter');
+							document.getElementById(`${pathNum.key}`).classList.add('mouseEnter');
 						
 						timer = setTimeout(()=>
 							HandleHover(pathNum.num,  pathNum.toMap), 1000

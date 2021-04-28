@@ -96,7 +96,6 @@ function Result(){
               <D_subTitle>오늘의 메인 아이템!</D_subTitle>
             </D_moreTitle>
             <D_shop>
-              {console.log(shopMain)}
               {shopMain.map((itemNum) => 
                 React.createElement(
                   "a",{
