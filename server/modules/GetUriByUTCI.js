@@ -1,6 +1,5 @@
 exports.GetUriByUTCI = function(utci, category) {
   let uriByUtci;
-  console.log("category",category);
 
   if(utci > 46){
     uriByUtci = "민소매";

@@ -5,9 +5,9 @@ import Axios from 'axios';
 
 import GlobalStyle from '../GlobalStyle';
 
-import Cal_UTCI from '../components/Cal_UTCI';
+import CalUTCI from '../components/CalUTCI';
 import getDay from '../components/getDay';
-import EmoticonUTCI from '../components/Emoticon_UTCI';
+import EmoticonUTCI from '../components/EmoticonUTCI';
 import MoreShop from '../components/MoreShop';
 import DataModal from '../components/DataModal';
 import Loading from '../components/Loading';
@@ -58,7 +58,7 @@ function Result(){
     
     useEffect(()=>{
       if(utci === false && content !== 0)
-      setUTCI(Cal_UTCI(content));
+      setUTCI(CalUTCI(content));
     },[content]);
     
     useEffect(()=>{
@@ -67,7 +67,7 @@ function Result(){
     }, [utci]);
     
     return(
-      <D_app>
+      <ResultContain>
       <GlobalStyle/>
       {
         isLoading ? (
@@ -80,22 +80,22 @@ function Result(){
           </>
         ) : (
           <>
-            <D_result>
-              <D_codi>
+            <ResultBox>
+              <CodiBox>
                 <EmoticonUTCI utci={utci}/>
-              </D_codi>
+              </CodiBox>
               <DataModal
                 time={yesterday.realTime}
                 content = {content}
                 utci = {utci}
               />
-            </D_result>
+            </ResultBox>
 
-            <D_moreTitle>
-              <D_mainTitle>Main Item</D_mainTitle>
-              <D_subTitle>오늘의 메인 아이템!</D_subTitle>
-            </D_moreTitle>
-            <D_shop>
+            <MoreTitleBox>
+              <MainTitle>Main Item</MainTitle>
+              <SubTitle>오늘의 메인 아이템!</SubTitle>
+            </MoreTitleBox>
+            <ShopBox>
               {shopMain.map((itemNum) => 
                 React.createElement(
                   "a",{
@@ -103,26 +103,26 @@ function Result(){
                     href: itemNum.link,
                     target: "_blank"
                   },
-                  <I_item src={itemNum.image}/>,
-                  <D_title>
+                  <ItemImg src={itemNum.image}/>,
+                  <TitleBox>
                     {itemNum.title}<br/>
                     <strong>{itemNum.lprice}</strong>원
-                  </D_title>
+                  </TitleBox>
               ))}
-            </D_shop>
-            <D_moreTitle>
-              <D_mainTitle>Sub Item</D_mainTitle>
-              <D_subTitle>메인 아이템과 어울리는 아이템!</D_subTitle>
-            </D_moreTitle>
+            </ShopBox>
+            <MoreTitleBox>
+              <MainTitle>Sub Item</MainTitle>
+              <SubTitle>메인 아이템과 어울리는 아이템!</SubTitle>
+            </MoreTitleBox>
             <MoreShop utci={utci}/>
           </>
         )
       }
-    </D_app>
+    </ResultContain>
   )
 }
 
-const D_app = styled.div`
+const ResultContain = styled.div`
   max-width: 1024px;
   height:100%;
   display: flex;
@@ -133,7 +133,7 @@ const D_app = styled.div`
   padding: 0 20px;
 `;
 
-const D_result = styled.div`
+const ResultBox = styled.div`
   position: relative;
   width:100%;
   height: 530px;
@@ -143,7 +143,7 @@ const D_result = styled.div`
   }
 `;
 
-const D_codi = styled.div`
+const CodiBox = styled.div`
   position:absolute;
   top: 30px;
   height: 50vw;
@@ -155,7 +155,7 @@ const D_codi = styled.div`
   }
 `;
 
-const D_shop = styled.div`
+const ShopBox = styled.div`
   margin-top: 20px;
   display: flex;
   width: 100%;
@@ -182,7 +182,7 @@ const D_shop = styled.div`
   }
 `;
 
-const I_item = styled.img`
+const ItemImg = styled.img`
   display: block;
   margin: 0 auto;
   height: 80%;
@@ -191,7 +191,7 @@ const I_item = styled.img`
   box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
 `;
 
-const D_title= styled.div`
+const TitleBox = styled.div`
   margin: 2px auto 0 auto;
   width:60%;
   font-size: 12px;
@@ -200,17 +200,17 @@ const D_title= styled.div`
   text-overflow: ellipsis; 
 `;
 
-const D_moreTitle = styled.div`
+const MoreTitleBox = styled.div`
   text-align: center;
 `;
 
-const D_mainTitle = styled.div`
+const MainTitle = styled.div`
   margin-top: 30px;
   font-size: 30px;
   font-weight: bold;
 `;
 
-const D_subTitle = styled.div`
+const SubTitle = styled.div`
   font-size: 12px;
   color: #999;
 `;

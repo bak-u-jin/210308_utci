@@ -6,14 +6,11 @@ import { connect } from "react-redux";
 import GlobalStyle from '../GlobalStyle';
 
 import getDay from '../components/getDay';
-import Cal_UTCI from '../components/Cal_UTCI';
+import CalUTCI from '../components/CalUTCI';
 import Map from '../components/Map';
-import Emoticon_UTCI from '../components/Emoticon_UTCI';
-import HowToUse from '../components/HowToUse';
+import EmoticonUTCI from '../components/EmoticonUTCI';
 
-
-
-function Home({store}) {
+function Home({ store }) {
   let yesterday = getDay();
   const locMain = true;
   
@@ -33,35 +30,33 @@ function Home({store}) {
   }
 
   useEffect(()=>{
-    setUTCI(Cal_UTCI(content));
+    setUTCI(CalUTCI(content));
   },[content])
 
   return (
-    <D_App className="App">
+    <App className="App">
       <GlobalStyle/>
 
-      <HowToUse/>
-      
-      <M_main>
+      <MainContain>
         <Map handleMap={store.pathLocation} boxSize={store.boxSize} submitReview={submitReview}/>
-        <D_data>
-          <D_ImgSize>
-            <Emoticon_UTCI utci={utci} location={locMain}/>
-          </D_ImgSize>
-          <D_dataTitle>
-            <Emoticon_UTCI utci={utci} type={true}/>
-          </D_dataTitle>
-        </D_data>
-      </M_main>
-    </D_App>
+        <DataBox>
+          <ImgSizeBox>
+            <EmoticonUTCI utci={utci} location={locMain}/>
+          </ImgSizeBox>
+          <DataTItle>
+            <EmoticonUTCI utci={utci} type={true}/>
+          </DataTItle>
+        </DataBox>
+      </MainContain>
+    </App>
   );
 }
 
-const D_App = styled.div`
+const App = styled.div`
   padding: 0 10px;
 `;
 
-const M_main = styled.div`
+const MainContain = styled.div`
   max-width: 1024px;
   margin: 5% auto;
   height: 100%;
@@ -70,7 +65,7 @@ const M_main = styled.div`
   align-items: center;
 `;
 
-const D_data = styled.div`
+const DataBox = styled.div`
   display: inline-block;
   border-radius: 10px;
   text-align: center;
@@ -90,14 +85,14 @@ const D_data = styled.div`
   }
   `;
   
-const D_ImgSize = styled.div`
+const ImgSizeBox = styled.div`
   height: 100px;
   @media only screen and (min-width:720px){
     height: 280px;
   }
 `;
   
-const D_dataTitle = styled.div`
+const DataTItle = styled.div`
   margin-top: 10px;
 `;
 

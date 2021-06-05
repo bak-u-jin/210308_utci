@@ -1,23 +1,23 @@
 import React from 'react';
 import styled, { css } from 'styled-components';
-import Emoticon_UTCI from './Emoticon_UTCI';
+import EmoticonUTCI from './EmoticonUTCI';
 
 function DataModal({time, content, utci}){
   return(
-    <U_dataModal>
-      <L_data title="true"><Emoticon_UTCI utci={utci} type={true}/></L_data>
-      <L_data>시간: {time}:00</L_data>
-      <L_data>장소: {content.stnNm}</L_data>
-      <L_data>기온: {content.ta}°C</L_data>
-      <L_data>복사온도: {content.ts}°C</L_data>
-      <L_data>풍속: {content.ws}m/s</L_data>
-      <L_data>습도: {content.hm}%</L_data>
-      <L_data>UTCI: {utci}°C</L_data>
-    </U_dataModal>
+    <DataList>
+      <Data title="true"><EmoticonUTCI utci={utci} type={true}/></Data>
+      <Data>시간: {time}:00</Data>
+      <Data>장소: {content.stnNm}</Data>
+      <Data>기온: {content.ta}°C</Data>
+      <Data>복사온도: {content.ts}°C</Data>
+      <Data>풍속: {content.ws}m/s</Data>
+      <Data>습도: {content.hm}%</Data>
+      <Data>UTCI: {utci}°C</Data>
+    </DataList>
   )
 }
 
-const U_dataModal = styled.ul`
+const DataList = styled.ul`
   position: absolute;
   right: 0px;
   bottom: 0px;
@@ -37,7 +37,7 @@ const U_dataModal = styled.ul`
   }
 `;
 
-const L_data = styled.li`
+const Data = styled.li`
   font-size: 1.4rem;
   margin:2px 0;
 

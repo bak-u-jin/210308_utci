@@ -3,15 +3,15 @@ import styled, { keyframes } from 'styled-components';
 
 function Loading(){
   return(
-    <D_LoadingBox>
-      <D_Loading bgColor="#e4fbff"/>
-      <D_Loading bgColor="#b8b5ff" aniDelay="0.6s"/>
-      <D_Loading bgColor="#7868e6" aniDelay="1.2s"/>
-    </D_LoadingBox> 
+    <LoadingBox>
+      <LoadingAni bgColor="#e4fbff"/>
+      <LoadingAni bgColor="#b8b5ff" aniDelay="0.6s"/>
+      <LoadingAni bgColor="#7868e6" aniDelay="1.2s"/>
+    </LoadingBox> 
   )
 }
 
-const D_LoadingBox = styled.div`
+const LoadingBox = styled.div`
   display: flex;
   position: absolute;
   top: 0px;
@@ -39,7 +39,7 @@ const loadingBounce = keyframes`
   }
 `;
 
-const D_Loading = styled.div`
+const LoadingAni = styled.div`
   display: inline-block;
   position: relative;
   width: 60px;

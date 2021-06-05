@@ -33,65 +33,8 @@ exports.postUTCI = function(req, res) {
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 										
 	request({url: O_apiUrl.totalUrl, headers}, (error, result) =>{
-		console.log(result);
 		const data = JSON.parse(result.body);
-		
 		const stringfyData = JSON.stringify(data.response.body.items.item[0]);
-		console.log(data.response.body.items.item[0]);
 		res.send(stringfyData);
 	})
 };
-
-
-// 	'User-Agent':       'Super Agent/0.0.1',
-
-// 	'Content-Type':     "application/xml"	
-
-
-// const bodyParser = require('body-parser');
-// const mongoose = require('mongoose');
-
-// app.post('/signup', (req, res) => {
-// 	var new_user = new Users(req.body);
-
-// 	new_user.save((err) => {
-// 		if (err) return res.status(500).json({ message: '저장 실패!' });
-// 		else {
-// 			count++;
-// 			return res.status(200).json({ message: '저장 성공!', data: new_user });
-// 		}
-// 	});
-// });
-
-// app.post('/signin', (req, res) => {
-// 	Users.findOne({ id: req.body.id, password: req.body.password }, (err, user) => {
-// 		if (err) return res.status(500).json({ message: '에러!' });
-// 		else if (user) return res.status(200).json({ message: '유저 찾음!', data: user });
-// 		else {
-// 			count++;
-// 			return res.status(404).json({ message: '유저 없음!' });
-// 		}
-// 	});
-// });
-
-
-// const uri = 'mongodb://127.0.0.1:27017/utci_db';
-// var db = mongoose.connect(uri, (err) => {
-// 	if (err) {
-// 		console.log(err.message);
-// 	} else {
-//     console.log('Succesfully Connected!');
-// 	}
-// });
-
-// var UserSchema = new mongoose.Schema({
-// 	password: {type: 'Number', required: true}, // 비밀번호
-// 	name: String, // 이름
-// 	id: String, // 아이디
-// });
-
-// var Users = mongoose.model('users', UserSchema);
-
-// app.get('/', (req, res) => {
-// 	console.log("UserIn");
-// });

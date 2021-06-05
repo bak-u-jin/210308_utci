@@ -16,20 +16,17 @@ function TopMenu({changePath}){
   }
 
   return(
-    <N_TopMenu>
-      
+    <NavTopMenu>
       <HashRouter>
         <Link to="/">
           <img src={logo} alt="logo" height="30px" onClick={logoClick}/>
         </Link>
-
-
       </HashRouter>
-    </N_TopMenu>
+    </NavTopMenu>
   );
 }
 
-const N_TopMenu = styled.nav`
+const NavTopMenu = styled.nav`
   width: 100%;
   height: 60px;
   display: flex;
