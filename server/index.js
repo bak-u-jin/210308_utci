@@ -1,14 +1,12 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const cors = require('cors');
 
 const GetNaverApi = require('./modules/GetNaverApi');
 const GetUTCI = require('./modules/GetUTCI');
 
-var app = express();
+const app = express();
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ limit: '1gb', extended: false }));
+app.use(express.json());
 
 app.post('/setTime', GetUTCI.postUTCI);
 app.post('/shopping', GetNaverApi.getShop);

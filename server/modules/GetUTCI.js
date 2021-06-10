@@ -1,4 +1,4 @@
-var request = require('request');
+const request = require('request');
 
 let O_apiUrl = new Object();
 
@@ -16,7 +16,7 @@ O_apiUrl.totalUrl = O_apiUrl.url + '?serviceKey=' + O_apiUrl.key + O_apiUrl.item
 										+ O_apiUrl.startDate + O_apiUrl.endDate
 										+ O_apiUrl.startTime + O_apiUrl.endTime;
 
-var headers = {
+let headers = {
 	'Accept' : 'application/json'
 }
 

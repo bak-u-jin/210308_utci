@@ -1,16 +1,16 @@
-var request = require('request');
+const request = require('request');
 const GetUriByUTCI = require('./GetUriByUTCI');
 
 var client_id = '6HmeeyGn9wj6jkb1N9uV';
 var client_secret = 'Nez5KbWj7L';
 
 exports.getShop = function (req, res) {
-  utci = req.body.utci;
-  category = req.body.category;
-  shopUri = GetUriByUTCI.GetUriByUTCI(utci, category);
+  let utci = req.body.utci;
+  let category = req.body.category;
+  let shopUri = GetUriByUTCI.GetUriByUTCI(utci, category);
 
-  var api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI(shopUri) + '&display=5';
-  var options = {
+  let api_url = 'https://openapi.naver.com/v1/search/shop.json?query=' + encodeURI(shopUri) + '&display=5';
+  let options = {
       url: api_url,
       headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
   };
