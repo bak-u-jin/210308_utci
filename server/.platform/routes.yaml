@@ -1,0 +1,16 @@
+# Each route describes how an incoming URL is going to be processed by Platform.sh.
+"https://www.{default}/":
+    type: upstream
+    upstream: "utci:http"
+
+"https://{default}/":
+    type: redirect
+    to: "https://www.{default}/"
+
+"https://www.{default}/setTime":
+    type: upstream
+    upstream: "utci:http"
+
+"https://www.{default}/shopping":
+    type: upstream
+    upstream: "utci:http"
